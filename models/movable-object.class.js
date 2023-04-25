@@ -4,7 +4,7 @@ class MovableObject {
   img;
   height = 100;
   width = 100;
-  imageCache = [];
+  imageCache = {};
 
   loadImage(path) {
     this.img = new Image();
@@ -27,3 +27,4 @@ class MovableObject {
     console.log('Moving left');
   }
 }
+
