@@ -16,7 +16,7 @@ document.addEventListener('keydown', (event) => {
 })
 document.addEventListener('keydown', (event) => {
     if(event.keyCode == 37)
-    keyboard.left = true
+    keyboard.LEFT = true
 })
 document.addEventListener('keydown', (event) => {
     if(event.keyCode == 38)
@@ -35,7 +35,7 @@ document.addEventListener('keyup', (event) => {
 })
 document.addEventListener('keyup', (event) => {
     if(event.keyCode == 37)
-    keyboard.left = false
+    keyboard.LEFT = false
 })
 document.addEventListener('keyup', (event) => {
     if(event.keyCode == 38)
