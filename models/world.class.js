@@ -12,6 +12,7 @@ class World {
         this.keyboard = keyboard
         this.draw();
         this.setWorld();
+        
     }
 
     setWorld() {
