@@ -1,18 +1,19 @@
-class MovableObject {
-  x = 100;
-  y = 280;
-  img;
-  height = 100;
-  width = 100;
-  imageCache = {};
-  currentImage = 0;
+class MovableObject extends DrawableObject {
+
   speed = 0.1;
   otherDirection = false;
   speedY = 0;
+  speedX = 0;
   acceleration = 2.5;
+  energy = 100;
+  lastHit = 0;
 
   isAboveGround() {
-    return this.y < 135;
+    if (this instanceof ThrowableObject) {
+      return true
+    } else {
+      return this.y < 135;
+    }
   };
 
   applyGravity() {
@@ -25,17 +26,31 @@ class MovableObject {
   };
 
 
-  loadImage(path) {
-    this.img = new Image();
-    this.img.src = path;
+
+  isColliding(mo) {
+    return this.x + this.width > mo.x &&
+      this.y + this.height > mo.y &&
+      this.x < mo.x &&
+      this.y < mo.y + mo.height
   }
 
-  loadImages(arr) {
-    arr.forEach((path) => {
-      let img = new Image();
-      img.src = path;
-      this.imageCache[path] = img;
-    });
+  hit() {
+    this.energy -= 10;
+    if (this.energy <= 0) {
+      this.energy = 0
+    } else {
+      this.lastHit = new Date().getTime();
+    }
+  }
+
+  isDead() {
+    return this.energy == 0
+  }
+
+  isHurt() {
+    let timepassed = new Date().getTime() - this.lastHit
+    timepassed = timepassed / 1000
+    return timepassed < 1
   }
 
   moveRight() {
@@ -43,8 +58,8 @@ class MovableObject {
     this.otherDirection = false;
   }
 
-  moveLeft() { 
-    this.x -= this.speed   
+  moveLeft() {
+    this.x -= this.speed
   }
 
   jump() {
@@ -58,4 +73,3 @@ class MovableObject {
     this.currentImage++;
   }
 }
-
