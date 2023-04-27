@@ -2,11 +2,12 @@ class MovableObject extends DrawableObject {
 
   speed = 0.1;
   otherDirection = false;
-  speedY = 0;
-  speedX = 0;
+  speedY
+  speedX
   acceleration = 2.5;
   energy = 100;
   lastHit = 0;
+  lastKeyPressed = 0
 
   isAboveGround() {
     if (this instanceof ThrowableObject) {
@@ -53,17 +54,33 @@ class MovableObject extends DrawableObject {
     return timepassed < 1
   }
 
+  idle(){
+    let timepassed = new Date().getTime() - this.lastKeyPressed
+    timepassed = timepassed / 1000
+    return timepassed > 0
+  }
+
+  idlelong(){
+    let timepassed = new Date().getTime() - this.lastKeyPressed
+    timepassed = timepassed / 1000
+    return timepassed > 2
+  }
+
+  
   moveRight() {
     this.x += this.speed;
     this.otherDirection = false;
+    this.lastKeyPressed = new Date().getTime();
   }
 
   moveLeft() {
     this.x -= this.speed
+    this.lastKeyPressed = new Date().getTime();
   }
 
   jump() {
     this.speedY = 20
+    this.lastKeyPressed = new Date().getTime();
   };
 
   playAnimation(images) {
