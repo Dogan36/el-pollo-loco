@@ -7,7 +7,9 @@ class MovableObject extends DrawableObject {
   acceleration = 2.5;
   energy = 100;
   lastHit = 0;
-  lastKeyPressed = 0
+  timepassed
+  lastKeyPressed = new Date().getTime()
+  
 
   isAboveGround() {
     if (this instanceof ThrowableObject) {
@@ -36,12 +38,13 @@ class MovableObject extends DrawableObject {
   }
 
   hit() {
+    if(!this.isHurt()){
     this.energy -= 10;
     if (this.energy <= 0) {
       this.energy = 0
     } else {
       this.lastHit = new Date().getTime();
-    }
+    }}
   }
 
   isDead() {
@@ -50,37 +53,34 @@ class MovableObject extends DrawableObject {
 
   isHurt() {
     let timepassed = new Date().getTime() - this.lastHit
-    timepassed = timepassed / 1000
-    return timepassed < 1
+    return timepassed < 500
   }
 
   idle(){
-    let timepassed = new Date().getTime() - this.lastKeyPressed
-    timepassed = timepassed / 1000
-    return timepassed > 0
+    let timepassedKey = new Date().getTime() - this.lastKeyPressed
+    return timepassedKey > 0 && timepassedKey < 3000
   }
 
   idlelong(){
-    let timepassed = new Date().getTime() - this.lastKeyPressed
-    timepassed = timepassed / 1000
-    return timepassed > 2
+    let timepassedKey = new Date().getTime() - this.lastKeyPressed
+    return timepassedKey > 3000
   }
 
   
   moveRight() {
     this.x += this.speed;
     this.otherDirection = false;
-    this.lastKeyPressed = new Date().getTime();
+   
   }
 
   moveLeft() {
     this.x -= this.speed
-    this.lastKeyPressed = new Date().getTime();
+    
   }
 
   jump() {
     this.speedY = 20
-    this.lastKeyPressed = new Date().getTime();
+    
   };
 
   playAnimation(images) {
