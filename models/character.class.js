@@ -4,9 +4,9 @@ class Character extends MovableObject {
     y = 135;
     x = 0;
     speed = 6;
-    
-   
- 
+
+
+
 
 
 
@@ -133,14 +133,22 @@ class Character extends MovableObject {
             else if (this.idle()) {
                 this.playAnimation(this.IMAGES_IDLE)
             }
-            
+
             else if (this.idlelong()) {
                 this.playAnimation(this.IMAGES_IDLELONG)
             }
-        }, 500)
+        }, 250)
 
     }
 
+    idle() {
+        let timepassedKey = new Date().getTime() - this.lastKeyPressed
+        return timepassedKey > 0 && timepassedKey < 3000
+    }
 
+    idlelong() {
+        let timepassedKey = new Date().getTime() - this.lastKeyPressed
+        return timepassedKey > 3000
+    }
 
 }

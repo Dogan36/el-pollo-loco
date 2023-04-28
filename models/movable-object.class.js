@@ -56,17 +56,7 @@ class MovableObject extends DrawableObject {
     return timepassed < 500
   }
 
-  idle(){
-    let timepassedKey = new Date().getTime() - this.lastKeyPressed
-    return timepassedKey > 0 && timepassedKey < 3000
-  }
 
-  idlelong(){
-    let timepassedKey = new Date().getTime() - this.lastKeyPressed
-    return timepassedKey > 3000
-  }
-
-  
   moveRight() {
     this.x += this.speed;
     this.otherDirection = false;
