@@ -62,12 +62,13 @@ class World {
 
         this.ctx.translate(this.camera_x, 0)
         this.addObjectsToMap(this.level.backgroundObjects);
-        this.addObjectsToMap(this.throwableObjects);
-        this.addObjectsToMap(this.level.bottles);
         this.addToMap(this.character)
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
-
+        
+        this.addObjectsToMap(this.throwableObjects);
+        this.addObjectsToMap(this.level.bottles);
+        this.addObjectsToMap(this.level.coins);
         this.ctx.translate(-this.camera_x, 0)
         this.addToMap(this.statusBarHealth)
         this.addToMap(this.statusBarCoins)
@@ -97,7 +98,7 @@ class World {
         }
         mo.draw(this.ctx);
 
-        if (mo instanceof Character || mo instanceof Chicken || mo instanceof Endboss) {
+        if (mo instanceof Character || mo instanceof Chicken || mo instanceof Endboss || mo instanceof Smallchicken || mo instanceof Bottle) {
             mo.drawFrame(this.ctx);
         }
 
