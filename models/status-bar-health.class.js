@@ -9,7 +9,7 @@ class StatusBarHealth extends DrawableObject {
         'img/7_statusbars/1_statusbar/2_statusbar_health/blue/100.png'
     ]
 
-    percentage = 100
+   
 
     constructor(){
         super();
@@ -26,6 +26,7 @@ class StatusBarHealth extends DrawableObject {
         let path = this.IMAGES[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
+
     resolveImageIndex() {
         if (this.percentage == 100) {
             return 5;

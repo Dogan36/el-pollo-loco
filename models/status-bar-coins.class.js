@@ -9,7 +9,7 @@ class StatusBarCoins extends DrawableObject {
         'img/7_statusbars/1_statusbar/1_statusbar_coin/blue/100.png'
     ]
 
-    percentage = 100
+ 
 
     constructor() {
         super();
@@ -28,7 +28,7 @@ class StatusBarCoins extends DrawableObject {
         this.img = this.imageCache[path];
     }
     resolveImageIndex() {
-        if (this.percentage == 100) {
+        if (this.percentage > 100) {
             return 5;
         } else if (this.percentage > 80) {
             return 4;

@@ -6,6 +6,8 @@ class MovableObject extends DrawableObject {
   speedX
   acceleration = 2.5;
   energy = 100;
+  collectedCoins = 0;
+  collectedBottles = 0;
   lastHit = 0;
   timepassed
   lastKeyPressed = new Date().getTime()

@@ -9,6 +9,8 @@ class World {
     statusBarBottles = new StatusBarBottles();
     statusBarCoins = new StatusBarCoins();
     throwableObjects = [];
+    collectedBottles = 0;
+    collectedCoins = 0;
     
 
 
@@ -30,6 +32,7 @@ class World {
         setInterval(() => {
             this.checkCollision();
             this.checkThrowObjects();
+            this.checkCollection()
         }, 200);
     }
 
@@ -48,6 +51,26 @@ class World {
             }
         })
     }
+
+    checkCollection() {
+        // Flaschen sammeln
+        this.level.bottles.forEach((bottle) => {
+          if (this.character.isColliding(bottle)) {
+            bottle.collect()
+            this.statusBarBottles.setPercentage(this.collectedBottles)
+          }
+        })
+      
+        // Münzen sammeln
+        this.level.coins.forEach((coin) => {
+          if (this.character.isColliding(coin)) {
+            console.log(this.collectedCoins)
+            coin.collect()
+            this.statusBarCoins.setPercentage(this.collectedCoins)
+          }
+        })
+      }
+      
 
     checkClose() {
        
@@ -98,7 +121,7 @@ class World {
         }
         mo.draw(this.ctx);
 
-        if (mo instanceof Character || mo instanceof Chicken || mo instanceof Endboss || mo instanceof Smallchicken || mo instanceof Bottle) {
+        if (mo instanceof Character || mo instanceof Chicken || mo instanceof Endboss || mo instanceof Smallchicken || mo instanceof Bottle || mo instanceof Coin) {
             mo.drawFrame(this.ctx);
         }
 

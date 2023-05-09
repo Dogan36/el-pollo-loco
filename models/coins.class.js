@@ -1,6 +1,12 @@
 class Coin extends MovableObject {
     height = 100;
-    width = 100 
+    width = 100;
+    offset = {
+        right: 60,
+        left: 30,
+        top: 30,
+        bottom: 60
+    };
     
 
 
@@ -22,5 +28,10 @@ class Coin extends MovableObject {
         setInterval(() => {
             this.playAnimation(this.IMAGES)
         }, 400)
+    }
+
+    collect() {
+       
+        world.collectedCoins += 10;
     }
 }
