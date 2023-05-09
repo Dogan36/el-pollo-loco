@@ -143,12 +143,12 @@ class Character extends MovableObject {
 
     idle() {
         let timepassedKey = new Date().getTime() - this.lastKeyPressed
-        return timepassedKey > 0 && timepassedKey < 3000
+        return timepassedKey > 0 && timepassedKey < 4000
     }
 
     idlelong() {
         let timepassedKey = new Date().getTime() - this.lastKeyPressed
-        return timepassedKey > 3000
+        return timepassedKey > 4000
     }
 
 }

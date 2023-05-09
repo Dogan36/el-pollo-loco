@@ -3,6 +3,7 @@ class Endboss extends MovableObject {
     height = 400;
     width = 250;
     y = 50;
+    x= 2500
     speed = 0.2
 
 
@@ -47,7 +48,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_ALERT);
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_HURT);
-        this.x = 2000;
+        
         setTimeout(() => {
            this.animate();
         }, 2000); // 2 Sekunden Verzögerung
