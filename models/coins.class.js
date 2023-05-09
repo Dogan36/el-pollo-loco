@@ -31,7 +31,7 @@ class Coin extends MovableObject {
     }
 
     collect() {
-       
+    
         world.collectedCoins += 10;
     }
 }

@@ -8,7 +8,7 @@ class Bottle extends MovableObject {
         top: 30,
         bottom: 50
     };
-    bottles=[]
+    isCollected = false
     
     IMAGES_BOTTLE = [
         'img/6_salsa_bottle/1_salsa_bottle_on_ground.png',
@@ -26,6 +26,7 @@ class Bottle extends MovableObject {
     collect() {
        
         world.collectedBottles += 10;
+    
     }
         
 }

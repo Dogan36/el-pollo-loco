@@ -18,12 +18,14 @@ class ThrowableObject extends MovableObject {
         this.loadImages(this.IMAGES_THROWING)
         this.x = x;
         this.y = y;
+        
         this.throw(x, y);
         this.animate()
     }
 
     throw() {
         this.applyGravity()
+       
         setInterval(() => {
             this.x += this.speedX;
 

@@ -32,12 +32,23 @@ class MovableObject extends DrawableObject {
 
 
 
-  isColliding(mo) {
-    return this.x + this.width > mo.x &&
-      this.y + this.height > mo.y &&
-      this.x < mo.x &&
-      this.y < mo.y + mo.height
+  isColliding(mo, xOffset = 0, yOffset = 0) {
+    const x1 = this.x + xOffset + this.offset.left;
+    const y1 = this.y + yOffset + this.offset.top;
+    const x2 = x1 + this.width - this.offset.right;
+    const y2 = y1 + this.height - this.offset.bottom;
+  
+    const moX1 = mo.x + xOffset + mo.offset.left;
+    const moY1 = mo.y + yOffset + mo.offset.top;
+    const moX2 = moX1 + mo.width - mo.offset.right;
+    const moY2 = moY1 + mo.height - mo.offset.bottom;
+  
+    return x2 > moX1 &&
+      y2 > moY1 &&
+      x1 < moX2 &&
+      y1 < moY2;
   }
+  
 
   hit() {
     if(!this.isHurt()){
