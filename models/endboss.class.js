@@ -9,7 +9,7 @@ class Endboss extends MovableObject {
         right: 50,
         left: 30,
         top: 30,
-        bottom: 50
+        bottom: 0
     };
 
 

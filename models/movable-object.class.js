@@ -45,7 +45,7 @@ class MovableObject extends DrawableObject {
     const moX1 = mo.x + mo.offset.left;
     const moY1 = mo.y + mo.offset.top;
     const moX2 = moX1 + mo.width - mo.offset.right - mo.offset.left;
-    const moY2 = moY1 + mo.height - mo.offset.bottom - mo.offset.top;
+    const moY2 = moY1 + mo.height - mo.offset.bottom - mo.offset.top ;
 
     return x2 > moX1 &&
       y2 > moY1 &&

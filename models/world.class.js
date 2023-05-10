@@ -11,6 +11,8 @@ class World {
     throwableObjects = [];
     collectedBottles = 0;
     collectedCoins = 0;
+    timepassedThrow
+    lastThrowTime = new Date().getTime()
 
 
 
@@ -41,14 +43,19 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.keyboard.D) {
+        if (this.keyboard.D && this.lastThrow()) {
             if (this.collectedBottles > 0) {
                 let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
                 this.throwableObjects.push(bottle);
                 this.collectedBottles -= 10
-                console.log(this.collectedBottles)
+                this.lastThrowTime = new Date().getTime()
             }
         }
+    }
+
+    lastThrow() {
+        let timepassedThrow = new Date().getTime() - this.lastThrowTime
+        return timepassedThrow > 500
     }
 
     checkCollision() {
@@ -61,8 +68,9 @@ class World {
     }
 
     checkJumpingOn() {
+
         this.level.enemies.forEach((enemy, i) => {
-            if (this.character.isJumpingOn(enemy)) {
+            if (this.character.isJumpingOn(enemy) && !(enemy instanceof Endboss)) {
                 this.level.enemies.splice(i, 1);
                 this.character.rejump()
             }
