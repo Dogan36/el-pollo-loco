@@ -5,6 +5,13 @@ class ThrowableObject extends MovableObject {
     speedY = 20;
     speedX = 10;
 
+    offset = {
+        left:0,
+        top: 0,
+        right: 0,
+        bottom: 0 
+    }
+
     IMAGES_THROWING = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
         'img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png',

@@ -15,6 +15,7 @@ class World {
 
 
 
+
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -30,27 +31,40 @@ class World {
 
     run() {
         setInterval(() => {
+            this.checkJumpingOn();
             this.checkCollision();
             this.checkThrowObjects();
             this.checkCollection()
-        }, 200);
+        }, 1000 / 60);
+
+
     }
 
     checkThrowObjects() {
         if (this.keyboard.D) {
-            if(this.collectedBottles>0){
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
-            this.throwableObjects.push(bottle);
-            this.collectedBottles -= 10
-            console.log(this.collectedBottles)
+            if (this.collectedBottles > 0) {
+                let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+                this.throwableObjects.push(bottle);
+                this.collectedBottles -= 10
+                console.log(this.collectedBottles)
+            }
         }
-    }}
+    }
 
     checkCollision() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 this.character.hit()
                 this.statusBarHealth.setPercentage(this.character.energy)
+            }
+        })
+    }
+
+    checkJumpingOn() {
+        this.level.enemies.forEach((enemy, i) => {
+            if (this.character.isJumpingOn(enemy)) {
+                this.level.enemies.splice(i, 1);
+                this.character.rejump()
             }
         })
     }
@@ -126,7 +140,7 @@ class World {
         }
         mo.draw(this.ctx);
 
-        if (mo instanceof Character || mo instanceof Chicken || mo instanceof Endboss || mo instanceof Smallchicken || mo instanceof Bottle || mo instanceof Coin) {
+        if (mo instanceof Character || mo instanceof Chicken || mo instanceof Endboss || mo instanceof Smallchicken || mo instanceof Bottle || mo instanceof Coin || mo instanceof ThrowableObject) {
             mo.drawFrame(this.ctx);
         }
 

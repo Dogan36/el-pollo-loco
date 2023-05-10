@@ -3,10 +3,10 @@ class Bottle extends MovableObject {
     width = 100; 
     y = 330;
     offset = {
-        right: 50,
+        right: 25,
         left: 30,
-        top: 30,
-        bottom: 50
+        top: 10,
+        bottom: 0
     };
     isCollected = false
     

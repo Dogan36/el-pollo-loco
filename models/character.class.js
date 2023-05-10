@@ -5,11 +5,12 @@ class Character extends MovableObject {
     x = 0;
     speed = 6;
     offset = {
-        right: 50,
-        left: 30,
+        left: 25,
         top: 90,
-        bottom: 90 
+        right: 25,
+        bottom: 0 
     };
+
 
 
 
@@ -111,6 +112,7 @@ class Character extends MovableObject {
 
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump()
+               
                 this.lastKeyPressed = new Date().getTime();
             }
 

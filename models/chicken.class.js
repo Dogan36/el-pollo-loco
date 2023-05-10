@@ -1,13 +1,13 @@
 class Chicken extends MovableObject {
     height = 100;
-    width = 100 
+    width = 100
     y = 330;
     speed = 0.2;
     offset = {
-        right: 0,
-        left: 0,
-        top: 0,
-        bottom: 0
+        right: 10,
+        left: 10,
+        top: 10,
+        bottom: 10
     };
 
     IMAGES_WALKING = [
