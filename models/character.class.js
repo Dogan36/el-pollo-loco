@@ -8,7 +8,7 @@ class Character extends MovableObject {
         left: 25,
         top: 90,
         right: 25,
-        bottom: 0 
+        bottom: 0
     };
 
 
@@ -99,7 +99,7 @@ class Character extends MovableObject {
     animate() {
         setInterval(() => {
 
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x - 300) {
                 this.moveRight()
                 this.lastKeyPressed = new Date().getTime();
             }
@@ -120,23 +120,22 @@ class Character extends MovableObject {
             }
 
             this.world.camera_x = -this.x + 50
-        }, 1000 / 60);
+        }, 1000/25);
 
 
-        setInterval(() => {
-
-            if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD)
-
+        let intervalId = setInterval(() => {
+            if (this.isDead() && !this.isAboveGround()) {
+                this.playAnimation(this.IMAGES_DEAD);
+                setTimeout(() => {
+                    clearInterval(intervalId);
+                    this.loadImage(this.IMAGES_DEAD[6]);
+                }, 900);
             }
-
             else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT)
             }
 
-            else if (this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_JUMPING)
-            }
+
 
             else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                 this.playAnimation(this.IMAGES_WALKING)
@@ -150,16 +149,51 @@ class Character extends MovableObject {
             }
         }, 250)
 
+        setInterval(() => {
+            if (this.isAboveGround()) {
+                console.log(this.speedY);
+                if (this.speedY >= 22.5) {
+                    this.loadImage(this.IMAGES_JUMPING[2]);
+                    console.log(this.IMAGES_JUMPING[2]);
+                } else if (this.speedY >= 17.5) {
+                    this.loadImage(this.IMAGES_JUMPING[2]);
+                    console.log(this.IMAGES_JUMPING[2]);
+                } else if (this.speedY >= 12.5) {
+                    this.loadImage(this.IMAGES_JUMPING[3]);
+                    console.log(this.IMAGES_JUMPING[3]);
+                } else if (this.speedY >= 7.5) {
+                    this.loadImage(this.IMAGES_JUMPING[3]);
+                    console.log(this.IMAGES_JUMPING[3]);
+                } else if (this.speedY >= 0) {
+                    this.loadImage(this.IMAGES_JUMPING[5]);
+                    console.log(this.IMAGES_JUMPING[5]);
+                } else if (this.speedY <= -22.5) {
+                    this.loadImage(this.IMAGES_JUMPING[7]);
+                    console.log(this.IMAGES_JUMPING[7]);
+                } else if (this.speedY <= -17.5) {
+                    this.loadImage(this.IMAGES_JUMPING[6]);
+                    console.log(this.IMAGES_JUMPING[6]);
+                } else if (this.speedY <= -12.5) {
+                    this.loadImage(this.IMAGES_JUMPING[6]);
+                    console.log(this.IMAGES_JUMPING[6]);
+                } else if (this.speedY <= -7.5) {
+                    this.loadImage(this.IMAGES_JUMPING[5]);
+                    console.log(this.IMAGES_JUMPING[5]);
+                }
+            }
+        }, 1000/60);
+        
+        
     }
 
     idle() {
         let timepassedKey = new Date().getTime() - this.lastKeyPressed
-        return timepassedKey > 0 && timepassedKey < 4000
+        return timepassedKey > 0 && timepassedKey < 8000
     }
 
     idlelong() {
         let timepassedKey = new Date().getTime() - this.lastKeyPressed
-        return timepassedKey > 4000
+        return timepassedKey > 8000
     }
 
 }

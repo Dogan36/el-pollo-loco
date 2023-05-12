@@ -82,7 +82,7 @@ class World {
 
     checkJumpingOn() {
         this.level.enemies.forEach((enemy, i) => {
-            if (this.character.isJumpingOn(enemy) && !(enemy instanceof Endboss)) {
+            if (this.character.isJumpingOn(enemy) && !(enemy instanceof Endboss) && !(this.character.isDead())) {
                 this.level.enemies.splice(i, 1);
                 this.character.rejump()
             }
@@ -124,10 +124,10 @@ class World {
 
         this.ctx.translate(this.camera_x, 0)
         this.addObjectsToMap(this.level.backgroundObjects);
-        this.addToMap(this.character)
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
-
+        this.addToMap(this.character)
+        
         this.addObjectsToMap(this.throwableObjects);
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.coins);

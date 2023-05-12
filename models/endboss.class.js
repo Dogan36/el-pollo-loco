@@ -92,8 +92,9 @@ class Endboss extends MovableObject {
             }
 
             else if(this.isHurt()){
+                this.speed = 1.5
                 this.moveLeft()
-             }
+            }
             else if (this.isAttacking()) {
                 this.moveLeft()
             }
