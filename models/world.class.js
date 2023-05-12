@@ -1,6 +1,7 @@
 class World {
     character = new Character();
-    level = level1
+    
+    level = level1;
     canvas;
     ctx;
     keyboard;
@@ -8,6 +9,7 @@ class World {
     statusBarHealth = new StatusBarHealth();
     statusBarBottles = new StatusBarBottles();
     statusBarCoins = new StatusBarCoins();
+    statusBarEndboss = new StatusBarEndboss();
     throwableObjects = [];
     collectedBottles = 0;
     collectedCoins = 0;
@@ -29,6 +31,7 @@ class World {
 
     setWorld() {
         this.character.world = this
+      
     }
 
     run() {
@@ -36,7 +39,8 @@ class World {
             this.checkJumpingOn();
             this.checkCollision();
             this.checkThrowObjects();
-            this.checkCollection()
+            this.checkCollection();
+            this.checkEndbossHit()
         }, 1000 / 60);
 
 
@@ -67,8 +71,16 @@ class World {
         })
     }
 
-    checkJumpingOn() {
+    checkEndbossHit() {
+        this.throwableObjects.forEach((bottle) => {
+            if (this.level.enemies[0].isColliding(bottle)) {
+                this.level.enemies[0].hit()
+                this.statusBarEndboss.setPercentage(this.level.enemies[0].energy)
+            }
+        })
+    }
 
+    checkJumpingOn() {
         this.level.enemies.forEach((enemy, i) => {
             if (this.character.isJumpingOn(enemy) && !(enemy instanceof Endboss)) {
                 this.level.enemies.splice(i, 1);
@@ -100,13 +112,13 @@ class World {
 
 
     checkClose() {
-
         if (this.character.isClose(Endboss)) {
             this.enemies.Endboss.isClose()
 
         }
 
     }
+
     draw() {
         this.ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -123,6 +135,7 @@ class World {
         this.addToMap(this.statusBarHealth)
         this.addToMap(this.statusBarCoins)
         this.addToMap(this.statusBarBottles)
+        this.addStatusbarEndboss()
         this.ctx.translate(this.camera_x, 0)
 
 
@@ -167,6 +180,12 @@ class World {
     flipImageBack(mo) {
         this.ctx.restore();
         mo.x = mo.x * -1;
+    }
+
+    addStatusbarEndboss(){
+        if(this.character.x> this.level.enemies[0].x-500){
+            this.addToMap(this.statusBarEndboss)
+        }
     }
 }
 

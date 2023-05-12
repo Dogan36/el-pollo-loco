@@ -4,6 +4,7 @@ class ThrowableObject extends MovableObject {
     width = 50;
     speedY = 20;
     speedX = 10;
+  
 
     offset = {
         left:0,
@@ -43,7 +44,6 @@ class ThrowableObject extends MovableObject {
         setInterval(() => {
             this.playAnimation(this.IMAGES_THROWING)
         }, 50)
-
 
     }
 

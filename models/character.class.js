@@ -104,7 +104,7 @@ class Character extends MovableObject {
                 this.lastKeyPressed = new Date().getTime();
             }
 
-             if (this.world.keyboard.LEFT && this.x > -100) {
+            if (this.world.keyboard.LEFT && this.x > -100) {
                 this.moveLeft()
                 this.otherDirection = true;
                 this.lastKeyPressed = new Date().getTime();
@@ -112,7 +112,10 @@ class Character extends MovableObject {
 
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump()
-               
+                this.lastKeyPressed = new Date().getTime();
+            }
+
+            if (this.world.keyboard.D) {
                 this.lastKeyPressed = new Date().getTime();
             }
 

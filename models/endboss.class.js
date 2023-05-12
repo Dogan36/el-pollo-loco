@@ -3,7 +3,7 @@ class Endboss extends MovableObject {
     height = 400;
     width = 250;
     y = 50;
-    x= 2500;
+    x = 2500;
     speed = 0.2;
     offset = {
         right: 50,
@@ -12,6 +12,7 @@ class Endboss extends MovableObject {
         bottom: 0
     };
 
+    world
 
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -48,17 +49,27 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/4_hurt/G23.png'
     ];
 
+    IMAGES_DEAD = [
+        'img/4_enemie_boss_chicken/5_dead/G24.png',
+        'img/4_enemie_boss_chicken/5_dead/G25.png',
+        'img/4_enemie_boss_chicken/5_dead/G26.png',
+
+
+
+    ]
+
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_ALERT);
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_HURT);
-        
+        this.loadImages(this.IMAGES_DEAD);
+
         setTimeout(() => {
-           this.animate();
+            this.animate();
         }, 2000); // 2 Sekunden Verzögerung
-        
+
     }
 
     isReached() {
@@ -67,7 +78,7 @@ class Endboss extends MovableObject {
 
     isClose() {
         return world.character.x > this.x - 500
-        console.log(world.character)
+
     };
 
     isAttacking() {
@@ -76,33 +87,47 @@ class Endboss extends MovableObject {
 
     animate() {
         setInterval(() => {
-            if (this.isAttacking()) {
-              this.moveLeft()  
+            if(this.isDead()){
+
             }
 
-            else if(this.isClose())
-            {
-                
+            else if(this.isHurt()){
+                this.moveLeft()
+             }
+            else if (this.isAttacking()) {
+                this.moveLeft()
+            }
+
+            else if (this.isClose()) {
+
             }
             else if (this.isReached()) {
                 this.moveLeft()
             }
         }, 16)
 
-        setInterval(() => {
-
-            if (this.isAttacking()) {
-                this.playAnimation(this.IMAGES_ATTACK)
+        let intervalId = setInterval(() => {
+            if (this.isDead()) {
+                this.playAnimation(this.IMAGES_DEAD);
+                setTimeout(() => {
+                    clearInterval(intervalId);
+                    this.loadImage(this.IMAGES_DEAD[2]);
+                }, 2000);
+            } else if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT);
+            } else if (this.isAttacking()) {
+                this.playAnimation(this.IMAGES_ATTACK);
+            } else if (this.isClose()) {
+                this.playAnimation(this.IMAGES_ALERT);
+            } else if (this.isReached()) {
+                this.playAnimation(this.IMAGES_WALKING);
             }
-
-            else if (this.isClose()) {
-                this.playAnimation(this.IMAGES_ALERT)
-            }
-
-            else if (this.isReached()) {
-                this.playAnimation(this.IMAGES_WALKING)
-            }
-        }, 150)
+        }, 150);
+        
+        
 
     }
 }
+
+
+
