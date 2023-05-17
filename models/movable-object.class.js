@@ -22,7 +22,7 @@ class MovableObject extends DrawableObject {
   };
 
   applyGravity() {
-    setInterval(() => {
+    this.gravityInterval = setInterval(() => {
       if (this.isAboveGround() || this.speedY > 0) {
         this.y -= this.speedY
         this.speedY -= this.acceleration
@@ -34,7 +34,9 @@ class MovableObject extends DrawableObject {
     }, 1000 / 25)
   };
 
-
+  cancelGravity() {
+    clearInterval(this.gravityInterval);
+  }
 
   isColliding(mo) {
     const x1 = this.x+ this.offset.left;

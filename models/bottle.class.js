@@ -25,7 +25,7 @@ class Bottle extends MovableObject {
 
     collect() {
        
-        world.collectedBottles += 10;
+        world.collectedBottles += 1;
     
     }
         

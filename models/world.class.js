@@ -1,6 +1,6 @@
 class World {
     character = new Character();
-    
+
     level = level1;
     canvas;
     ctx;
@@ -31,7 +31,7 @@ class World {
 
     setWorld() {
         this.character.world = this
-      
+
     }
 
     run() {
@@ -47,24 +47,25 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.keyboard.D && this.lastThrow()) {
-            if (this.collectedBottles > 0) {
+        if (this.keyboard.D && this.lastThrow() && this.collectedBottles > 0) {
+         
                 let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
                 this.throwableObjects.push(bottle);
-                this.collectedBottles -= 10
+                this.collectedBottles -= 1
+                console.log('bottles'+ this.collectedBottles)
                 this.lastThrowTime = new Date().getTime()
-            }
+            
         }
     }
 
     lastThrow() {
         let timepassedThrow = new Date().getTime() - this.lastThrowTime
-        return timepassedThrow > 500
+        return timepassedThrow > 600
     }
 
     checkCollision() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
+            if (this.character.isColliding(enemy) && !(enemy.isDead())) {
                 this.character.hit()
                 this.statusBarHealth.setPercentage(this.character.energy)
             }
@@ -72,22 +73,46 @@ class World {
     }
 
     checkEndbossHit() {
-        this.throwableObjects.forEach((bottle) => {
-            if (this.level.enemies[0].isColliding(bottle)) {
-                this.level.enemies[0].hit()
-                this.statusBarEndboss.setPercentage(this.level.enemies[0].energy)
-            }
-        })
-    }
+        const throwableObjects = this.throwableObjects.slice(); // Kopie der throwableObjects-Array erstellen
+        const enemies = this.level.enemies; // Referenz auf enemies speichern
+        for (let i = 0; i < throwableObjects.length; i++) {
+          const bottle = throwableObjects[i];
+          if (enemies[0].isColliding(bottle)) {
+            enemies[0].hit();
+            console.log(enemies[0].energy);
+            this.statusBarEndboss.setPercentage(enemies[0].energy);
+            setTimeout(() => {
+              const index = this.throwableObjects.indexOf(bottle); // Index des bottle in der ursprünglichen Array finden
+              if (index !== -1) {
+                this.throwableObjects.splice(index, 1);
+              }
+            }, 250);
+          }
+        }
+      }
+      
 
     checkJumpingOn() {
-        this.level.enemies.forEach((enemy, i) => {
-            if (this.character.isJumpingOn(enemy) && !(enemy instanceof Endboss) && !(this.character.isDead())) {
-                this.level.enemies.splice(i, 1);
-                this.character.rejump()
+        
+          const enemies = this.level.enemies.slice(); // Kopie der Feind-Array erstellen
+          enemies.forEach((enemy, i) => {
+            if (this.character.isJumpingOn(enemy) && !(enemy instanceof Endboss) && !(this.character.isDead()) && !(enemy.isDead())) {
+              enemy.energy = 0;
+              console.log(enemy);
+              setTimeout(() => {
+                const index = this.level.enemies.indexOf(enemy); // Index des Feindes in der ursprünglichen Array finden
+                if (index !== -1) {
+                  this.level.enemies.splice(index, 1);
+                  console.log(this.level.enemies);
+                }
+              }, 2000);
+      
+              this.character.rejump();
             }
-        })
-    }
+          });
+       
+      }
+      
 
     checkCollection() {
         // Flaschen sammeln
@@ -96,13 +121,12 @@ class World {
                 bottle.collect()
                 this.level.bottles.splice(i, 1);
             }
-            this.statusBarBottles.setPercentage(this.collectedBottles)
         })
+        this.statusBarBottles.setPercentage(this.collectedBottles*10)
 
         // Münzen sammeln
         this.level.coins.forEach((coin, i) => {
             if (this.character.isColliding(coin)) {
-                console.log(this.collectedCoins)
                 coin.collect()
                 this.statusBarCoins.setPercentage(this.collectedCoins)
                 this.level.coins.splice(i, 1);
@@ -127,7 +151,7 @@ class World {
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character)
-        
+
         this.addObjectsToMap(this.throwableObjects);
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.coins);
@@ -161,9 +185,9 @@ class World {
         }
         mo.draw(this.ctx);
 
-        if (mo instanceof Character || mo instanceof Chicken || mo instanceof Endboss || mo instanceof Smallchicken || mo instanceof Bottle || mo instanceof Coin || mo instanceof ThrowableObject) {
-            mo.drawFrame(this.ctx);
-        }
+        // if (mo instanceof Character || mo instanceof Chicken || mo instanceof Endboss || mo instanceof Smallchicken || mo instanceof Bottle || mo instanceof Coin || mo instanceof ThrowableObject) {
+        //    mo.drawFrame(this.ctx);
+        //  }
 
         if (mo.otherDirection) {
             this.flipImageBack(mo)
@@ -182,8 +206,8 @@ class World {
         mo.x = mo.x * -1;
     }
 
-    addStatusbarEndboss(){
-        if(this.character.x> this.level.enemies[0].x-500){
+    addStatusbarEndboss() {
+        if (this.character.x > this.level.enemies[0].x - 500) {
             this.addToMap(this.statusBarEndboss)
         }
     }

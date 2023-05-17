@@ -78,9 +78,12 @@ class Character extends MovableObject {
         'img/2_character_pepe/5_dead/D-54.png',
         'img/2_character_pepe/5_dead/D-55.png',
         'img/2_character_pepe/5_dead/D-56.png',
-        'img/2_character_pepe/5_dead/D-57.png'
+        
     ]
 
+    IMAGES_DISAPEAR = [
+        'img/2_character_pepe/5_dead/D-57.png'
+    ]
 
     world
 
@@ -92,6 +95,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
+        this.loadImages(this.IMAGES_DISAPEAR);
         this.applyGravity();
         this.animate();
     }
@@ -124,12 +128,13 @@ class Character extends MovableObject {
 
 
         let intervalId = setInterval(() => {
-            if (this.isDead() && !this.isAboveGround()) {
+            if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
+
                 setTimeout(() => {
                     clearInterval(intervalId);
-                    this.loadImage(this.IMAGES_DEAD[6]);
-                }, 900);
+                    this.loadImage(this.IMAGES_DISAPEAR);
+                }, 1500);
             }
             else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT)
@@ -150,35 +155,35 @@ class Character extends MovableObject {
         }, 250)
 
         setInterval(() => {
-            if (this.isAboveGround()) {
-                console.log(this.speedY);
+            if (this.isAboveGround() && !(this.isDead())) {
+               
                 if (this.speedY >= 22.5) {
                     this.loadImage(this.IMAGES_JUMPING[2]);
-                    console.log(this.IMAGES_JUMPING[2]);
+                  
                 } else if (this.speedY >= 17.5) {
                     this.loadImage(this.IMAGES_JUMPING[2]);
-                    console.log(this.IMAGES_JUMPING[2]);
+                   
                 } else if (this.speedY >= 12.5) {
                     this.loadImage(this.IMAGES_JUMPING[3]);
-                    console.log(this.IMAGES_JUMPING[3]);
+                   
                 } else if (this.speedY >= 7.5) {
                     this.loadImage(this.IMAGES_JUMPING[3]);
-                    console.log(this.IMAGES_JUMPING[3]);
+                    
                 } else if (this.speedY >= 0) {
                     this.loadImage(this.IMAGES_JUMPING[5]);
-                    console.log(this.IMAGES_JUMPING[5]);
+                   
                 } else if (this.speedY <= -22.5) {
                     this.loadImage(this.IMAGES_JUMPING[7]);
-                    console.log(this.IMAGES_JUMPING[7]);
+                    
                 } else if (this.speedY <= -17.5) {
                     this.loadImage(this.IMAGES_JUMPING[6]);
-                    console.log(this.IMAGES_JUMPING[6]);
+                   
                 } else if (this.speedY <= -12.5) {
                     this.loadImage(this.IMAGES_JUMPING[6]);
-                    console.log(this.IMAGES_JUMPING[6]);
+                    
                 } else if (this.speedY <= -7.5) {
                     this.loadImage(this.IMAGES_JUMPING[5]);
-                    console.log(this.IMAGES_JUMPING[5]);
+                    
                 }
             }
         }, 1000/60);
