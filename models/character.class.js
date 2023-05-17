@@ -78,14 +78,14 @@ class Character extends MovableObject {
         'img/2_character_pepe/5_dead/D-54.png',
         'img/2_character_pepe/5_dead/D-55.png',
         'img/2_character_pepe/5_dead/D-56.png',
-        
+
     ]
 
     IMAGES_DISAPEAR = [
         'img/2_character_pepe/5_dead/D-57.png'
-    ]
+    ];
 
-    world
+    world;
 
     constructor() {
         super().loadImage('img/2_character_pepe/1_idle/idle/I-1.png')
@@ -101,95 +101,48 @@ class Character extends MovableObject {
     }
 
     animate() {
-        setInterval(() => {
-
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x - 300) {
-                this.moveRight()
-                this.lastKeyPressed = new Date().getTime();
-            }
-
-            if (this.world.keyboard.LEFT && this.x > -100) {
-                this.moveLeft()
-                this.otherDirection = true;
-                this.lastKeyPressed = new Date().getTime();
-            }
-
-            if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-                this.jump()
-                this.lastKeyPressed = new Date().getTime();
-            }
-
-            if (this.world.keyboard.D) {
-                this.lastKeyPressed = new Date().getTime();
-            }
-
-            this.world.camera_x = -this.x + 50
-        }, 1000/25);
-
-
-        let intervalId = setInterval(() => {
-            if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
-
-                setTimeout(() => {
-                    clearInterval(intervalId);
-                    this.loadImage(this.IMAGES_DISAPEAR);
-                }, 1500);
-            }
-            else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT)
-            }
-
-
-
-            else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                this.playAnimation(this.IMAGES_WALKING)
-            }
-            else if (this.idle()) {
-                this.playAnimation(this.IMAGES_IDLE)
-            }
-
-            else if (this.idlelong()) {
-                this.playAnimation(this.IMAGES_IDLELONG)
-            }
-        }, 250)
-
-        setInterval(() => {
-            if (this.isAboveGround() && !(this.isDead())) {
-               
-                if (this.speedY >= 22.5) {
-                    this.loadImage(this.IMAGES_JUMPING[2]);
-                  
-                } else if (this.speedY >= 17.5) {
-                    this.loadImage(this.IMAGES_JUMPING[2]);
-                   
-                } else if (this.speedY >= 12.5) {
-                    this.loadImage(this.IMAGES_JUMPING[3]);
-                   
-                } else if (this.speedY >= 7.5) {
-                    this.loadImage(this.IMAGES_JUMPING[3]);
-                    
-                } else if (this.speedY >= 0) {
-                    this.loadImage(this.IMAGES_JUMPING[5]);
-                   
-                } else if (this.speedY <= -22.5) {
-                    this.loadImage(this.IMAGES_JUMPING[7]);
-                    
-                } else if (this.speedY <= -17.5) {
-                    this.loadImage(this.IMAGES_JUMPING[6]);
-                   
-                } else if (this.speedY <= -12.5) {
-                    this.loadImage(this.IMAGES_JUMPING[6]);
-                    
-                } else if (this.speedY <= -7.5) {
-                    this.loadImage(this.IMAGES_JUMPING[5]);
-                    
-                }
-            }
-        }, 1000/60);
-        
-        
+        setStoppableInterval(this.checkKeyboardPress.bind(this), 1000 / 25)
+        setStoppableInterval(this.playAnimations.bind(this), 250)
+        setStoppableInterval(this.playAnimationsJump.bind(this), 1000 / 25)
     }
+
+
+    checkKeyboardPress() {
+        if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x - 300) { this.moveRight(); this.lastKeyPressed = new Date().getTime(); }
+        if (this.world.keyboard.LEFT && this.x > -100) { this.moveLeft(); this.otherDirection = true; this.lastKeyPressed = new Date().getTime(); }
+        if (this.world.keyboard.SPACE && !this.isAboveGround()) { this.jump(); this.lastKeyPressed = new Date().getTime(); }
+        if (this.world.keyboard.D) { this.lastKeyPressed = new Date().getTime(); }
+        this.world.camera_x = -this.x + 50;
+    }
+
+
+    playAnimations() {
+        if (this.isDead()) {
+            this.playAnimation(this.IMAGES_DEAD);
+            setTimeout(() => {
+                clearInterval(intervalId);
+                this.loadImage(this.IMAGES_DISAPEAR);
+            }, 1500);
+        }
+        else if (this.isHurt()) this.playAnimation(this.IMAGES_HURT)
+        else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) this.playAnimation(this.IMAGES_WALKING)
+        else if (this.idle()) this.playAnimation(this.IMAGES_IDLE)
+        else if (this.idlelong()) this.playAnimation(this.IMAGES_IDLELONG)
+    }
+
+
+    playAnimationsJump() {
+        if (this.isAboveGround() && !this.isDead()) {
+            if (this.speedY >= 22.5) this.loadImage(this.IMAGES_JUMPING[2]);
+            else if (this.speedY >= 12.5) this.loadImage(this.IMAGES_JUMPING[3]);
+            else if (this.speedY >= 7.5) this.loadImage(this.IMAGES_JUMPING[4]);
+            else if (this.speedY >= 0) this.loadImage(this.IMAGES_JUMPING[5]);
+            else if (this.speedY <= -22.5) this.loadImage(this.IMAGES_JUMPING[7]);
+            else if (this.speedY <= -17.5 || this.speedY <= -12.5 || this.speedY <= -7.5) this.loadImage(this.IMAGES_JUMPING[6]);
+            else this.loadImage(this.IMAGES_JUMPING[5]);
+        }
+    }
+
 
     idle() {
         let timepassedKey = new Date().getTime() - this.lastKeyPressed

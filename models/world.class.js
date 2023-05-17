@@ -33,7 +33,7 @@ class World {
         this.character.world = this
 
     }
-
+    
     run() {
         setInterval(() => {
             this.checkJumpingOn();
