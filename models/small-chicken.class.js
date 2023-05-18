@@ -30,21 +30,18 @@ class Smallchicken extends MovableObject {
     }
 
     animate() {
-        setInterval(() => {
-            if(this.isDead()){
-                this.playAnimation(this.IMAGE_DEAD)
-            }
-
-            else{
-            this.playAnimation(this.IMAGES_WALKING)}
-        }, 200)
+        setStoppableInterval(this.playAnimations.bind(this), 200);
+        setStoppableInterval(this.chickenMove.bind(this), 1000 / 60);
+    }
 
 
-        setInterval(() => {
-            if(!(this.isDead())){
-            this.moveLeft()
-            }
-        }, 1000 / 60)
+    playAnimations() {
+        if (this.isDead()) this.playAnimation(this.IMAGE_DEAD)
+        else this.playAnimation(this.IMAGES_WALKING)
+    }
 
+
+    chickenMove() {
+        if (!(this.isDead())) this.moveLeft()
     }
 }

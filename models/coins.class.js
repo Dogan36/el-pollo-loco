@@ -20,9 +20,9 @@ class Coin extends MovableObject {
         this.loadImages(this.IMAGES)
         this.x = 200 + Math.random() * 2000;
         this.y = 300 -  Math.random() * 300;
-        
         this.animate();
     }
+
 
     animate() {
         setInterval(() => {
@@ -30,8 +30,8 @@ class Coin extends MovableObject {
         }, 400)
     }
 
+
     collect() {
-    
         world.collectedCoins += 10;
     }
 }

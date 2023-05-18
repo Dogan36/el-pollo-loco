@@ -11,12 +11,6 @@ class Character extends MovableObject {
         bottom: 0
     };
 
-
-
-
-
-
-
     IMAGES_IDLE = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
         'img/2_character_pepe/1_idle/idle/I-2.png',
@@ -85,8 +79,7 @@ class Character extends MovableObject {
         'img/2_character_pepe/5_dead/D-57.png'
     ];
 
-    world;
-
+   
     constructor() {
         super().loadImage('img/2_character_pepe/1_idle/idle/I-1.png')
         this.loadImages(this.IMAGES_IDLE);
@@ -99,6 +92,7 @@ class Character extends MovableObject {
         this.applyGravity();
         this.animate();
     }
+
 
     animate() {
         setStoppableInterval(this.checkKeyboardPress.bind(this), 1000 / 25)
@@ -120,7 +114,7 @@ class Character extends MovableObject {
         if (this.isDead()) {
             this.playAnimation(this.IMAGES_DEAD);
             setTimeout(() => {
-                clearInterval(intervalId);
+                clearInterval(49);
                 this.loadImage(this.IMAGES_DISAPEAR);
             }, 1500);
         }
@@ -149,9 +143,9 @@ class Character extends MovableObject {
         return timepassedKey > 0 && timepassedKey < 8000
     }
 
+
     idlelong() {
         let timepassedKey = new Date().getTime() - this.lastKeyPressed
         return timepassedKey > 8000
     }
-
 }

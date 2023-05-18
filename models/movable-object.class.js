@@ -21,12 +21,13 @@ class MovableObject extends DrawableObject {
     }
   };
 
+
   applyGravity() {
     this.gravityInterval = setInterval(() => {
       if (this.isAboveGround() || this.speedY > 0) {
         this.y -= this.speedY
         this.speedY -= this.acceleration
-        if(this instanceof Character && this.y > 135){
+        if (this instanceof Character && this.y > 135) {
           this.y = 135
         }
       }
@@ -34,12 +35,14 @@ class MovableObject extends DrawableObject {
     }, 1000 / 25)
   };
 
+
   cancelGravity() {
     clearInterval(this.gravityInterval);
   }
 
+
   isColliding(mo) {
-    const x1 = this.x+ this.offset.left;
+    const x1 = this.x + this.offset.left;
     const y1 = this.y + this.offset.top;
     const x2 = x1 + this.width - this.offset.right - this.offset.left;
     const y2 = y1 + this.height - this.offset.bottom - this.offset.top;
@@ -47,13 +50,14 @@ class MovableObject extends DrawableObject {
     const moX1 = mo.x + mo.offset.left;
     const moY1 = mo.y + mo.offset.top;
     const moX2 = moX1 + mo.width - mo.offset.right - mo.offset.left;
-    const moY2 = moY1 + mo.height - mo.offset.bottom - mo.offset.top ;
+    const moY2 = moY1 + mo.height - mo.offset.bottom - mo.offset.top;
 
     return x2 > moX1 &&
       y2 > moY1 &&
       x1 < moX2 &&
       y1 < moY2;
   }
+
 
   isJumpingOn(mo) {
     return this.speedY < -5 &&
@@ -62,6 +66,7 @@ class MovableObject extends DrawableObject {
       this.x + this.width - this.offset.right + 10 > mo.x &&
       this.x - this.offset.left - 10 < mo.x + mo.width;
   }
+
 
   hit() {
     if (!this.isHurt()) {
@@ -74,9 +79,11 @@ class MovableObject extends DrawableObject {
     }
   }
 
+
   isDead() {
     return this.energy == 0
   }
+
 
   isHurt() {
     let timepassed = new Date().getTime() - this.lastHit
@@ -90,19 +97,22 @@ class MovableObject extends DrawableObject {
 
   }
 
+
   moveLeft() {
     this.x -= this.speed
-
   }
+
 
   jump() {
     this.speedY = 30
 
   };
 
+
   rejump() {
     this.speedY = 10
-   }
+  }
+
 
   playAnimation(images) {
     let i = this.currentImage % images.length

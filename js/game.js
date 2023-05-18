@@ -63,10 +63,10 @@ document.addEventListener('keyup', (event) => {
 })
 
 let intervalIds = [];
-let i = 1;
 
 function setStoppableInterval(fn, time) {
     let id = setInterval(fn, time);
+    console.log(id)
     intervalIds.push(id);
 }
 
