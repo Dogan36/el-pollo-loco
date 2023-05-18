@@ -138,7 +138,6 @@ class World {
     checkClose() {
         if (this.character.isClose(Endboss)) {
             this.enemies.Endboss.isClose()
-
         }
 
     }

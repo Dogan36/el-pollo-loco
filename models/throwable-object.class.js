@@ -42,12 +42,11 @@ class ThrowableObject extends MovableObject {
         this.animate()
     }
 
+
     throw() {
         this.applyGravity()
-
         this.throwInterval = setInterval(() => {
             this.x += this.speedX;
-
         }, 25)
     }
 
@@ -58,11 +57,8 @@ class ThrowableObject extends MovableObject {
            
             if (world.level.enemies[0].isColliding(this)) {
                 this.playAnimation(this.IMAGES_SPLASH)
-                console.log('hit')
                 this.cancelGravity()
                 clearInterval(this.throwInterval);
-               
-        
             }
             else {
                 this.playAnimation(this.IMAGES_THROWING)

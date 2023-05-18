@@ -117,6 +117,7 @@ class Character extends MovableObject {
                 clearInterval(49);
                 this.loadImage(this.IMAGES_DISAPEAR);
             }, 1500);
+            stopGame()
         }
         else if (this.isHurt()) this.playAnimation(this.IMAGES_HURT)
         else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) this.playAnimation(this.IMAGES_WALKING)

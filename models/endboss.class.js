@@ -109,6 +109,7 @@ class Endboss extends MovableObject {
                 setTimeout(() => {
                     clearInterval(61);
                     this.loadImage(this.IMAGES_DEAD[2]);
+                    stopGame()
                 }, 2000);
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
