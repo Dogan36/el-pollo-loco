@@ -73,3 +73,53 @@ function setStoppableInterval(fn, time) {
 function stopGame() {
     intervalIds.forEach(clearInterval);
 }
+
+function toggleFullscreen() {
+    var container = document.getElementById('game-container');
+
+    if (!document.fullscreenElement) {
+        if (container.requestFullscreen) {
+            container.requestFullscreen();
+        } else if (container.mozRequestFullScreen) { // Firefox
+            container.mozRequestFullScreen();
+        } else if (container.webkitRequestFullscreen) { // Chrome, Safari and Opera
+            container.webkitRequestFullscreen();
+        } else if (container.msRequestFullscreen) { // IE/Edge
+            container.msRequestFullscreen();
+        }
+        adjustScaling()
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) { // Firefox
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { // IE/Edge
+            document.msExitFullscreen();
+        }
+        undoScaling()
+    }
+}
+
+function adjustScaling() {
+    var canvas = document.getElementById('canvas');
+    var windowWidth = window.innerWidth;
+    var windowHeight = window.innerHeight;
+    var scaleFactorX = windowWidth / canvas.width;
+    var scaleFactorY = windowHeight / canvas.height;
+    canvas.style.transform = 'scale(' + scaleFactorX + ', ' + scaleFactorY + ')';
+
+
+}
+function undoScaling() {
+    var canvas = document.getElementById('canvas');
+
+    canvas.style.transform = 'scale(' + 1 + ', ' + 1 + ')';
+
+
+}
+
+document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') undoScaling();
+});
