@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,10 +28,24 @@
     <script src="models/level.class.js"></script>
     <script src="levels/level1.js"></script>
 </head>
+
 <body onload="initLevel(), init()">
-  
     <h1 class="title">El pollo loco</h1>
-    <canvas id="canvas" width="900px" height="480px"></canvas>
-   
+    <div class="fullscreen" id="fullscreen">
+        <div class="container" id="container">
+        <canvas class="canvas" id="canvas" width="900px" height="480px"></canvas>
+        <div class="overlay"></div>
+        <div class="overlay"></div>
+        <div class="overlay">
+            <div class="icons">
+                <img src="img/audio-speaker-on.png" alt="">
+                <img onclick="toggleFullscreen()" src="img/fullscreen.png" alt="">
+            </div>
+        </div>
+        </div>
+    </div>
 </body>
+
+
+
 </html>

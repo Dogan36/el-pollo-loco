@@ -75,51 +75,73 @@ function stopGame() {
 }
 
 function toggleFullscreen() {
-    var container = document.getElementById('canvas');
+    var fullscreen = document.getElementById('fullscreen');
 
     if (!document.fullscreenElement) {
-        if (container.requestFullscreen) {
-            container.requestFullscreen();
-        } else if (container.mozRequestFullScreen) { // Firefox
-            container.mozRequestFullScreen();
-        } else if (container.webkitRequestFullscreen) { // Chrome, Safari and Opera
-            container.webkitRequestFullscreen();
-        } else if (container.msRequestFullscreen) { // IE/Edge
-            container.msRequestFullscreen();
+        var requestFullscreen = fullscreen.requestFullscreen || fullscreen.mozRequestFullScreen || fullscreen.webkitRequestFullscreen || fullscreen.msRequestFullscreen;
+
+        if (requestFullscreen) {
+            requestFullscreen.call(fullscreen).then(function() {
+                setTimeout(adjustScaling, 100);
+            });
         }
-        adjustScaling()
     } else {
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.mozCancelFullScreen) { // Firefox
-            document.mozCancelFullScreen();
-        } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
-            document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) { // IE/Edge
-            document.msExitFullscreen();
+        var exitFullscreen = document.exitFullscreen || document.mozCancelFullScreen || document.webkitExitFullscreen || document.msExitFullscreen;
+
+        if (exitFullscreen) {
+            exitFullscreen.call(document);
         }
-        undoScaling()
+        undoScaling();
     }
 }
 
+
+
+
 function adjustScaling() {
-    var canvas = document.getElementById('canvas');
-    var windowWidth = window.innerWidth;
-    var windowHeight = window.innerHeight;
-    var scaleFactorX = windowWidth / canvas.width;
-    var scaleFactorY = windowHeight / canvas.height;
-    canvas.style.transform = 'scale(' + scaleFactorX + ', ' + scaleFactorY + ')';
+    var container = document.getElementById('container');
+    var fullscreen = document.getElementById('fullscreen');
+    var fullscreenWidth = fullscreen.offsetWidth;
+    var fullscreenHeight = fullscreen.offsetHeight;
+    var scaleFactor = Math.min(fullscreenWidth / container.offsetWidth, fullscreenHeight / container.offsetHeight);
+    var scaledWidth = container.offsetWidth * scaleFactor;
+    var scaledHeight = container.offsetHeight * scaleFactor;
+    var offsetX = (fullscreenWidth - scaledWidth) / 2;
+    var offsetY = (fullscreenHeight - scaledHeight) / 2;
 
-
+    container.style.transform = 'scale(' + scaleFactor + ')';
+    container.style.transformOrigin = 'top left';
+    container.style.position = 'absolute';
+    container.style.left = offsetX + 'px';
+    container.style.top = offsetY + 'px';
+    container.style.right = offsetX + 'px';
+    container.style.bottom = offsetY + 'px';
 }
+
+
+
+
+
+
+
 function undoScaling() {
-    var canvas = document.getElementById('canvas');
-
-    canvas.style.transform = 'scale(' + 1 + ', ' + 1 + ')';
-
-
+    var container = document.getElementById('container');
+    container.style.transform = 'scale(' + 1 + ')';
+    container.style.transformOrigin = 'unset';
+    container.style.left = '0';
+    container.style.top = '0';
+    container.style.position = 'static';
 }
 
-document.addEventListener('keydown', function (event) {
-    if (event.key === 'Escape') undoScaling();
-});
+
+
+function handleFullscreenChange() {
+    if (!document.fullscreenElement) {
+        undoScaling();
+    }
+}
+
+document.addEventListener('fullscreenchange', handleFullscreenChange);
+document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+document.addEventListener('msfullscreenchange', handleFullscreenChange);
