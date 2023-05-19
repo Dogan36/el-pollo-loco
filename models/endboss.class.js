@@ -86,7 +86,7 @@ class Endboss extends MovableObject {
     animate() {
         setStoppableInterval(this.moveEndboss.bind(this), 16);
         console.log(intervalIds)
-        setStoppableInterval(this.playAnimations.bind(this), 160);
+        let animationsIntervalEndboss = setStoppableInterval(this.playAnimations.bind(this), 160);
         console.log(intervalIds)
     }
 
@@ -107,7 +107,7 @@ class Endboss extends MovableObject {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
                 setTimeout(() => {
-                    clearInterval(61);
+                    stopIntervalById('animationsIntervalEndboss');
                     this.loadImage(this.IMAGES_DEAD[2]);
                     stopGame()
                 }, 2000);

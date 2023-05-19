@@ -96,7 +96,7 @@ class Character extends MovableObject {
 
     animate() {
         setStoppableInterval(this.checkKeyboardPress.bind(this), 1000 / 25)
-        setStoppableInterval(this.playAnimations.bind(this), 250)
+        let animationsIntervalCharacter = setStoppableInterval(this.playAnimations.bind(this), 250)
         setStoppableInterval(this.playAnimationsJump.bind(this), 1000 / 25)
     }
 
@@ -114,7 +114,8 @@ class Character extends MovableObject {
         if (this.isDead()) {
             this.playAnimation(this.IMAGES_DEAD);
             setTimeout(() => {
-                clearInterval(49);
+                stopIntervalById('animationsIntervalCharacter');
+                
                 this.loadImage(this.IMAGES_DISAPEAR);
                 stopGame()
             }, 1500);

@@ -66,9 +66,14 @@ let intervalIds = [];
 
 function setStoppableInterval(fn, time) {
     let id = setInterval(fn, time);
-    console.log(id)
     intervalIds.push(id);
+    return id;
 }
+
+function stopIntervalById(id) {
+    clearInterval(intervalIds.find(intervalId => intervalId === id));
+  }
+  
 
 function stopGame() {
     intervalIds.forEach(clearInterval);
