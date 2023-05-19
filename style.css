@@ -2,15 +2,28 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin:0;
+    padding: 0;
 }
 
 canvas{
     background-color: black;
 }
 
-#game-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
+
+
+/* Smartphones */
+@media only screen and (max-width: 1000px) {
+    canvas {
+    width: 100%;
+    }
+    }
+    /* Smartphones -------- */
+    @media only screen and (max-height: 480px) {
+    canvas {
+    height: 100vh;
+    }
+    .title{
+        display: none;
+    }
+    }

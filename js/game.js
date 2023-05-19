@@ -75,7 +75,7 @@ function stopGame() {
 }
 
 function toggleFullscreen() {
-    var container = document.getElementById('game-container');
+    var container = document.getElementById('canvas');
 
     if (!document.fullscreenElement) {
         if (container.requestFullscreen) {
