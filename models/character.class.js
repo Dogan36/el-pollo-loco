@@ -137,8 +137,10 @@ class Character extends MovableObject {
             stopIntervalById('animationsIntervalCharacter');
             this.y=1000
             this.loadImage(this.IMAGES_DISAPEAR);
+            changeEndscreen('lose')
+            stopGame()
         }, 1500);
-        stopGame()
+        //changeEndscreen(lose)
     }
 
     idle() {

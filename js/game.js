@@ -103,6 +103,11 @@ function restartGame(){
     init();
 }
 
+function changeEndscreen(status){
+    let endscreen = document.getElementById('endscreenImg')
+if(status == 'win') endscreen.src = 'img/9_intro_outro_screens/game_over/game over!.png'
+else endscreen.src = 'img/9_intro_outro_screens/game_over/you lost.png'
+}
 
 function toggleFullscreen() {
     let fullscreenImg = document.getElementById('fullscreenImg')

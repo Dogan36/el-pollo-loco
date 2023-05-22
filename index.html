@@ -38,20 +38,25 @@
         <div class="container" id="container">
             <canvas class="canvas" id="canvas" width="900px" height="480px"></canvas>
 
-            <div id="endscreen" class="overlay d-none"><img src="img/9_intro_outro_screens/game_over/game over!.png"
-                    alt=""><button onclick="initLevel(); init()">Restart</button></div>
+            <div id="endscreen" class="overlay d-none"><img id="endscreenImg" src="img/9_intro_outro_screens/game_over/game over!.png"
+                    alt=""><button class="startButton" onclick="initLevel(); init()">Restart</button></div>
         
         <div id="startscreen" class="overlay"><img src="img/9_intro_outro_screens/start/startscreen_1.png" alt="">
-            <button onclick="initLevel(); init()">Start</button>
+            <button class="startButton" onclick="initLevel(); init()">Start</button>
         </div>
         <div class="overlay">
             <div class="icons">
                 <img src="img/audio-speaker-on.png" alt="">
                 <img id="fullscreenImg" onclick="toggleFullscreen()" src="img/fullscreen.png" alt="">
             </div>
-            <div class="controls"></div>
+            <div class="controls">
+                <button class="control"></button><p>MoveLeft</p>
+                <button class="control"></button><p>MoveRight</p>
+                <button class="control"></button><p>Jump</p>
+                <button class="control"></button><p>Throw Bottle</p>
+            </div>
         </div>
-        <button onclick= "initLevel(); init()">Start</button></div>
+   
     </div>
     </div>
 </body>
