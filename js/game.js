@@ -90,6 +90,7 @@ function toggleFullscreen() {
             });
         }
         fullscreenImg.src='img/minimize.png'
+        removeBackground()
     } else {
         var exitFullscreen = document.exitFullscreen || document.mozCancelFullScreen || document.webkitExitFullscreen || document.msExitFullscreen;
         if (exitFullscreen) {
@@ -97,6 +98,7 @@ function toggleFullscreen() {
         }
         undoScaling();
         fullscreenImg.src='img/fullscreen.png'
+        showBackground()
     }
 }
 
@@ -144,3 +146,13 @@ document.addEventListener('fullscreenchange', handleFullscreenChange);
 document.addEventListener('mozfullscreenchange', handleFullscreenChange);
 document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
 document.addEventListener('msfullscreenchange', handleFullscreenChange);
+
+function removeBackground(){
+    document.getElementById('pepeBackground').classList.add('d-none')
+    document.getElementById('endbossBackground').classList.add('d-none')
+}
+
+function showBackground(){
+    document.getElementById('pepeBackground').classList.remove('d-none')
+    document.getElementById('endbossBackground').classList.remove('d-none')
+}

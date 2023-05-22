@@ -11,6 +11,13 @@ body {
 .d-none{
     display: none;
 }
+.title{    font-family: montagueregular;
+    font-size: 68px;
+    margin: 0;
+    letter-spacing: 10px;
+    font-weight: normal;
+}
+
 canvas {
     position: absolute;
     top: 0;
@@ -63,7 +70,7 @@ canvas {
 .endbossBackground{
     position: absolute;
     top: -340px;
-    left: 552px;
+    left: 630px;
     z-index: -1;
     height: 744px;
 }
