@@ -30,22 +30,29 @@
     <script src="levels/level1.js"></script>
 </head>
 
-<body  onload="initLevel(), init()"; background='img/5_background/first_half_background.png'>
+<body background='img/5_background/first_half_background.png'>
     <h1 class="title">El pollo loco</h1>
     <div class="fullscreen" id="fullscreen">
         <img id="pepeBackground" class="pepeBackground" src="img/2_character_pepe/1_idle/idle/I-1.png" alt="">
         <img id="endbossBackground" class="endbossBackground" src="img/4_enemie_boss_chicken/3_attack/G20.png" alt="">
         <div class="container" id="container">
-        <canvas class="canvas" id="canvas" width="900px" height="480px"></canvas>
-        <div class="overlay"></div>
-        <div class="overlay"></div>
+            <canvas class="canvas" id="canvas" width="900px" height="480px"></canvas>
+
+            <div id="endscreen" class="overlay d-none"><img src="img/9_intro_outro_screens/game_over/game over!.png"
+                    alt=""><button onclick="initLevel(); init()">Restart</button></div>
+        
+        <div id="startscreen" class="overlay"><img src="img/9_intro_outro_screens/start/startscreen_1.png" alt="">
+            <button onclick="initLevel(); init()">Start</button>
+        </div>
         <div class="overlay">
             <div class="icons">
                 <img src="img/audio-speaker-on.png" alt="">
                 <img id="fullscreenImg" onclick="toggleFullscreen()" src="img/fullscreen.png" alt="">
             </div>
+            <div class="controls"></div>
         </div>
-        </div>
+        <button onclick= "initLevel(); init()">Start</button></div>
+    </div>
     </div>
 </body>
 

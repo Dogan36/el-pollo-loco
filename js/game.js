@@ -4,7 +4,9 @@ let keyboard = new Keyboard();
 
 function init() {
     canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard)
+    world = new World(canvas, keyboard);
+    hideStartscreen()
+    hideEndscreen()
 }
 
 
@@ -74,10 +76,33 @@ function stopIntervalById(id) {
     clearInterval(intervalIds.find(intervalId => intervalId === id));
   }
   
-
-function stopGame() {
-    intervalIds.forEach(clearInterval);
+  
+  function stopGame() {
+    clearIntervals()
+    showEndscreen()
 }
+
+function clearIntervals(){
+    intervalIds.forEach(clearInterval);
+      intervalIds=[];
+}
+
+function showEndscreen(){
+    document.getElementById('endscreen').classList.remove('d-none');
+}
+function hideEndscreen(){
+    document.getElementById('endscreen').classList.add('d-none');
+}
+function hideStartscreen(){
+    document.getElementById('startscreen').classList.add('d-none');
+}
+
+function restartGame(){
+    hideEndscreen();
+    initLevel();
+    init();
+}
+
 
 function toggleFullscreen() {
     let fullscreenImg = document.getElementById('fullscreenImg')

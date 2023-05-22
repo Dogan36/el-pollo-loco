@@ -111,15 +111,7 @@ class Character extends MovableObject {
 
 
     playAnimations() {
-        if (this.isDead()) {
-            this.playAnimation(this.IMAGES_DEAD);
-            setTimeout(() => {
-                stopIntervalById('animationsIntervalCharacter');
-                
-                this.loadImage(this.IMAGES_DISAPEAR);
-                stopGame()
-            }, 1500);
-        }
+        if (this.isDead()) this.playAnimationsDead()
         else if (this.isHurt()) this.playAnimation(this.IMAGES_HURT)
         else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) this.playAnimation(this.IMAGES_WALKING)
         else if (this.idle()) this.playAnimation(this.IMAGES_IDLE)
@@ -139,6 +131,15 @@ class Character extends MovableObject {
         }
     }
 
+    playAnimationsDead(){
+        this.playAnimation(this.IMAGES_DEAD);
+        setTimeout(() => {
+            stopIntervalById('animationsIntervalCharacter');
+            this.y=1000
+            this.loadImage(this.IMAGES_DISAPEAR);
+        }, 1500);
+        stopGame()
+    }
 
     idle() {
         let timepassedKey = new Date().getTime() - this.lastKeyPressed

@@ -15,6 +15,7 @@ class World {
     collectedCoins = 0;
     timepassedThrow
     lastThrowTime = new Date().getTime()
+    gameIsRunning = true
 
 
 
@@ -33,7 +34,7 @@ class World {
         this.character.world = this
 
     }
-    
+
     run() {
         setInterval(() => {
             this.checkJumpingOn();
@@ -48,13 +49,13 @@ class World {
 
     checkThrowObjects() {
         if (this.keyboard.D && this.lastThrow() && this.collectedBottles > 0) {
-         
-                let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
-                this.throwableObjects.push(bottle);
-                this.collectedBottles -= 1
-                console.log('bottles'+ this.collectedBottles)
-                this.lastThrowTime = new Date().getTime()
-            
+
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+            this.throwableObjects.push(bottle);
+            this.collectedBottles -= 1
+            console.log('bottles' + this.collectedBottles)
+            this.lastThrowTime = new Date().getTime()
+
         }
     }
 
@@ -76,43 +77,43 @@ class World {
         const throwableObjects = this.throwableObjects.slice(); // Kopie der throwableObjects-Array erstellen
         const enemies = this.level.enemies; // Referenz auf enemies speichern
         for (let i = 0; i < throwableObjects.length; i++) {
-          const bottle = throwableObjects[i];
-          if (enemies[0].isColliding(bottle)) {
-            enemies[0].hit();
-            console.log(enemies[0].energy);
-            this.statusBarEndboss.setPercentage(enemies[0].energy);
-            setTimeout(() => {
-              const index = this.throwableObjects.indexOf(bottle); // Index des bottle in der ursprünglichen Array finden
-              if (index !== -1) {
-                this.throwableObjects.splice(index, 1);
-              }
-            }, 250);
-          }
+            const bottle = throwableObjects[i];
+            if (enemies[0].isColliding(bottle)) {
+                enemies[0].hit();
+                console.log(enemies[0].energy);
+                this.statusBarEndboss.setPercentage(enemies[0].energy);
+                setTimeout(() => {
+                    const index = this.throwableObjects.indexOf(bottle); // Index des bottle in der ursprünglichen Array finden
+                    if (index !== -1) {
+                        this.throwableObjects.splice(index, 1);
+                    }
+                }, 250);
+            }
         }
-      }
-      
+    }
+
 
     checkJumpingOn() {
-        
-          const enemies = this.level.enemies.slice(); // Kopie der Feind-Array erstellen
-          enemies.forEach((enemy, i) => {
+
+        const enemies = this.level.enemies.slice(); // Kopie der Feind-Array erstellen
+        enemies.forEach((enemy, i) => {
             if (this.character.isJumpingOn(enemy) && !(enemy instanceof Endboss) && !(this.character.isDead()) && !(enemy.isDead())) {
-              enemy.energy = 0;
-              console.log(enemy);
-              setTimeout(() => {
-                const index = this.level.enemies.indexOf(enemy); // Index des Feindes in der ursprünglichen Array finden
-                if (index !== -1) {
-                  this.level.enemies.splice(index, 1);
-                  console.log(this.level.enemies);
-                }
-              }, 2000);
-      
-              this.character.rejump();
+                enemy.energy = 0;
+                console.log(enemy);
+                setTimeout(() => {
+                    const index = this.level.enemies.indexOf(enemy); // Index des Feindes in der ursprünglichen Array finden
+                    if (index !== -1) {
+                        this.level.enemies.splice(index, 1);
+                        console.log(this.level.enemies);
+                    }
+                }, 2000);
+
+                this.character.rejump();
             }
-          });
-       
-      }
-      
+        });
+
+    }
+
 
     checkCollection() {
         // Flaschen sammeln
@@ -122,7 +123,7 @@ class World {
                 this.level.bottles.splice(i, 1);
             }
         })
-        this.statusBarBottles.setPercentage(this.collectedBottles*10)
+        this.statusBarBottles.setPercentage(this.collectedBottles * 10)
 
         // Münzen sammeln
         this.level.coins.forEach((coin, i) => {
@@ -143,32 +144,34 @@ class World {
     }
 
     draw() {
-        this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (this.gameIsRunning) {
+            this.ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        this.ctx.translate(this.camera_x, 0)
-        this.addObjectsToMap(this.level.backgroundObjects);
-        this.addObjectsToMap(this.level.clouds);
-        this.addObjectsToMap(this.level.enemies);
-        this.addToMap(this.character)
+            this.ctx.translate(this.camera_x, 0)
+            this.addObjectsToMap(this.level.backgroundObjects);
+            this.addObjectsToMap(this.level.clouds);
+            this.addObjectsToMap(this.level.enemies);
+            this.addToMap(this.character)
 
-        this.addObjectsToMap(this.throwableObjects);
-        this.addObjectsToMap(this.level.bottles);
-        this.addObjectsToMap(this.level.coins);
-        this.ctx.translate(-this.camera_x, 0)
-        this.addToMap(this.statusBarHealth)
-        this.addToMap(this.statusBarCoins)
-        this.addToMap(this.statusBarBottles)
-        this.addStatusbarEndboss()
-        this.ctx.translate(this.camera_x, 0)
+            this.addObjectsToMap(this.throwableObjects);
+            this.addObjectsToMap(this.level.bottles);
+            this.addObjectsToMap(this.level.coins);
+            this.ctx.translate(-this.camera_x, 0)
+            this.addToMap(this.statusBarHealth)
+            this.addToMap(this.statusBarCoins)
+            this.addToMap(this.statusBarBottles)
+            this.addStatusbarEndboss()
+            this.ctx.translate(this.camera_x, 0)
 
 
 
-        this.ctx.translate(-this.camera_x, 0)
+            this.ctx.translate(-this.camera_x, 0)
 
-        let self = this;
-        requestAnimationFrame(function () {
-            self.draw();
-        });
+            let self = this;
+            requestAnimationFrame(function () {
+                self.draw();
+            });
+        }
     }
 
     addObjectsToMap(objects) {
@@ -206,7 +209,7 @@ class World {
     }
 
     addStatusbarEndboss() {
-        if (this.character.x > this.level.enemies[0].x - 500) {
+        if (this.level.enemies[0] && this.character.x > this.level.enemies[0].x - 500) {
             this.addToMap(this.statusBarEndboss)
         }
     }

@@ -54,7 +54,7 @@ class ThrowableObject extends MovableObject {
 
     animate() {
         setInterval(() => {
-           
+
             if (world.level.enemies[0].isColliding(this)) {
                 this.playAnimation(this.IMAGES_SPLASH)
                 this.cancelGravity()
