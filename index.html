@@ -29,9 +29,11 @@
     <script src="levels/level1.js"></script>
 </head>
 
-<body onload="initLevel(), init()">
+<body  onload="initLevel(), init()"; background='img/5_background/first_half_background.png'>
     <h1 class="title">El pollo loco</h1>
     <div class="fullscreen" id="fullscreen">
+        <img class="pepeBackground" src="img/2_character_pepe/1_idle/idle/I-1.png" alt="">
+        <img class="endbossBackground" src="img/4_enemie_boss_chicken/3_attack/G20.png" alt="">
         <div class="container" id="container">
         <canvas class="canvas" id="canvas" width="900px" height="480px"></canvas>
         <div class="overlay"></div>
@@ -39,7 +41,7 @@
         <div class="overlay">
             <div class="icons">
                 <img src="img/audio-speaker-on.png" alt="">
-                <img onclick="toggleFullscreen()" src="img/fullscreen.png" alt="">
+                <img id="fullscreenImg" onclick="toggleFullscreen()" src="img/fullscreen.png" alt="">
             </div>
         </div>
         </div>

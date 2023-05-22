@@ -4,8 +4,13 @@ body {
     align-items: center;
     margin: 0;
     padding: 0;
+    justify-content: space-around;
+    height: 100vh;
+    overflow: hidden;
 }
-
+.d-none{
+    display: none;
+}
 canvas {
     position: absolute;
     top: 0;
@@ -19,6 +24,8 @@ canvas {
     position: relative;
     width: 900px;
     height: 480px;
+    box-shadow: rgb(0, 0, 0) 0px 0px 86px;
+    border: 1px solid black;
 }
 
 .overlay {
@@ -40,6 +47,26 @@ canvas {
     gap: 20px;
 }
 
+.icons img{
+    cursor: pointer;
+}
+.fullscreen{
+    position: relative;
+}
+.pepeBackground{
+    position: absolute;
+    top: -746px;
+    left: -265px;
+    z-index: -1;
+}
+
+.endbossBackground{
+    position: absolute;
+    top: -340px;
+    left: 552px;
+    z-index: -1;
+    height: 744px;
+}
 
 /* Smartphones */
 @media only screen and (max-width: 1000px) {

@@ -80,23 +80,23 @@ function stopGame() {
 }
 
 function toggleFullscreen() {
+    let fullscreenImg = document.getElementById('fullscreenImg')
     var fullscreen = document.getElementById('fullscreen');
-
     if (!document.fullscreenElement) {
         var requestFullscreen = fullscreen.requestFullscreen || fullscreen.mozRequestFullScreen || fullscreen.webkitRequestFullscreen || fullscreen.msRequestFullscreen;
-
         if (requestFullscreen) {
             requestFullscreen.call(fullscreen).then(function() {
                 setTimeout(adjustScaling, 100);
             });
         }
+        fullscreenImg.src='img/minimize.png'
     } else {
         var exitFullscreen = document.exitFullscreen || document.mozCancelFullScreen || document.webkitExitFullscreen || document.msExitFullscreen;
-
         if (exitFullscreen) {
             exitFullscreen.call(document);
         }
         undoScaling();
+        fullscreenImg.src='img/fullscreen.png'
     }
 }
 
@@ -125,10 +125,6 @@ function adjustScaling() {
 
 
 
-
-
-
-
 function undoScaling() {
     var container = document.getElementById('container');
     container.style.transform = 'scale(' + 1 + ')';
@@ -137,8 +133,6 @@ function undoScaling() {
     container.style.top = '0';
     container.style.position = 'static';
 }
-
-
 
 function handleFullscreenChange() {
     if (!document.fullscreenElement) {

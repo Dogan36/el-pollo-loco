@@ -103,23 +103,20 @@ class Endboss extends MovableObject {
 
 
     playAnimations() {
-       
-            if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
-                setTimeout(() => {
-                    stopIntervalById('animationsIntervalEndboss');
-                    this.loadImage(this.IMAGES_DEAD[2]);
-                    stopGame()
-                }, 2000);
-            } else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
-            } else if (this.isAttacking()) {
-                this.playAnimation(this.IMAGES_ATTACK);
-            } else if (this.isClose()) {
-                this.playAnimation(this.IMAGES_ALERT);
-            } else if (this.isReached()) {
-                this.playAnimation(this.IMAGES_WALKING);
-            }
-        
+        if (this.isDead()) this.playAnimationsDead();
+        else if (this.isHurt()) this.playAnimation(this.IMAGES_HURT);
+        else if (this.isAttacking()) this.playAnimation(this.IMAGES_ATTACK);
+        else if (this.isClose()) this.playAnimation(this.IMAGES_ALERT);
+        else if (this.isReached()) this.playAnimation(this.IMAGES_WALKING);
+    }
+
+    
+    playAnimationsDead(){
+        this.playAnimation(this.IMAGES_DEAD);
+            setTimeout(() => {
+                stopIntervalById('animationsIntervalEndboss');
+                this.loadImage(this.IMAGES_DEAD[2]);
+                stopGame()
+            }, 2000);
     }
 }   
