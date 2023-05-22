@@ -49,12 +49,25 @@
                 <img src="img/audio-speaker-on.png" alt="">
                 <img id="fullscreenImg" onclick="toggleFullscreen()" src="img/fullscreen.png" alt="">
             </div>
-            <div class="controls">
-                <button class="control"></button><p>MoveLeft</p>
-                <button class="control"></button><p>MoveRight</p>
-                <button class="control"></button><p>Jump</p>
-                <button class="control"></button><p>Throw Bottle</p>
+            <div id="controls" class="controls d-none">
+                <button class="control"><img src="img/icons8-links-52.png" alt=""></button><p>MoveLeft</p>
+                <button class="control"><img src="img/icons8-rechts-52.png" alt=""></button><p>MoveRight</p>
+                <button class="control">SPACE</button><p>Jump</p>
+                <button class="control"><img src="img/icons8-d-50.png" alt=""></button><p>Throw Bottle</p>
             </div>
+            <div id="controlsMobile" class="controlsMobile">
+                <div>
+                    <button id="left" class="control" ontouchstart="keyboard.LEFT = true;" ontouchend="keyboard.LEFT = false;"><img src="img/icons8-links-52.png" alt=""></button>
+                    <button id="right" class="control" ontouchstart="keyboard.RIGHT = true;" ontouchend="keyboard.RIGHT = false;"><img src="img/icons8-rechts-52.png" alt=""></button>
+                </div>
+                <div>
+                    <button id="jump" class="control" ontouchstart="keyboard.SPACE = true;" ontouchend="keyboard.SPACE = false;"><img class="rotate" src="img/icons8-links-52.png" alt=""></button>
+                    <button id="throw" class="control" ontouchstart="keyboard.D= true;" ontouchend="keyboard.D = false;"><img src="img/icons8-sauce-bottle-48.png" alt=""></button>
+                </div>
+            </div>
+            
+            </div>
+
         </div>
    
     </div>

@@ -64,6 +64,8 @@ document.addEventListener('keyup', (event) => {
 
 })
 
+
+
 let intervalIds = [];
 
 function setStoppableInterval(fn, time) {
@@ -169,6 +171,7 @@ function undoScaling() {
 function handleFullscreenChange() {
     if (!document.fullscreenElement) {
         undoScaling();
+        showBackground()
     }
 }
 
