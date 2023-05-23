@@ -64,6 +64,15 @@ document.addEventListener('keyup', (event) => {
 
 })
 
+function handleTouchStart(event, key) {
+    event.preventDefault(); // Verhindert das Standardverhalten des Browsers
+    keyboard[key] = true; // Setzt die entsprechende Taste auf true
+}
+
+function handleTouchEnd(event, key) {
+    event.preventDefault(); // Verhindert das Standardverhalten des Browsers
+    keyboard[key] = false; // Setzt die entsprechende Taste auf false
+}
 
 
 let intervalIds = [];
@@ -76,39 +85,39 @@ function setStoppableInterval(fn, time) {
 
 function stopIntervalById(id) {
     clearInterval(intervalIds.find(intervalId => intervalId === id));
-  }
-  
-  
-  function stopGame() {
+}
+
+
+function stopGame() {
     clearIntervals()
     showEndscreen()
 }
 
-function clearIntervals(){
+function clearIntervals() {
     intervalIds.forEach(clearInterval);
-      intervalIds=[];
+    intervalIds = [];
 }
 
-function showEndscreen(){
+function showEndscreen() {
     document.getElementById('endscreen').classList.remove('d-none');
 }
-function hideEndscreen(){
+function hideEndscreen() {
     document.getElementById('endscreen').classList.add('d-none');
 }
-function hideStartscreen(){
+function hideStartscreen() {
     document.getElementById('startscreen').classList.add('d-none');
 }
 
-function restartGame(){
+function restartGame() {
     hideEndscreen();
     initLevel();
     init();
 }
 
-function changeEndscreen(status){
+function changeEndscreen(status) {
     let endscreen = document.getElementById('endscreenImg')
-if(status == 'win') endscreen.src = 'img/9_intro_outro_screens/game_over/game over!.png'
-else endscreen.src = 'img/9_intro_outro_screens/game_over/you lost.png'
+    if (status == 'win') endscreen.src = 'img/9_intro_outro_screens/game_over/game over!.png'
+    else endscreen.src = 'img/9_intro_outro_screens/game_over/you lost.png'
 }
 
 function toggleFullscreen() {
@@ -117,11 +126,11 @@ function toggleFullscreen() {
     if (!document.fullscreenElement) {
         var requestFullscreen = fullscreen.requestFullscreen || fullscreen.mozRequestFullScreen || fullscreen.webkitRequestFullscreen || fullscreen.msRequestFullscreen;
         if (requestFullscreen) {
-            requestFullscreen.call(fullscreen).then(function() {
+            requestFullscreen.call(fullscreen).then(function () {
                 setTimeout(adjustScaling, 100);
             });
         }
-        fullscreenImg.src='img/minimize.png'
+        fullscreenImg.src = 'img/minimize.png'
         removeBackground()
     } else {
         var exitFullscreen = document.exitFullscreen || document.mozCancelFullScreen || document.webkitExitFullscreen || document.msExitFullscreen;
@@ -129,10 +138,33 @@ function toggleFullscreen() {
             exitFullscreen.call(document);
         }
         undoScaling();
-        fullscreenImg.src='img/fullscreen.png'
+        fullscreenImg.src = 'img/fullscreen.png'
         showBackground()
     }
 }
+
+function toggleRotateOverlay(show) {
+    var rotateOverlay = document.getElementById('rotateOverlay');
+    if (show) {
+        rotateOverlay.style.display = 'flex';
+    } else {
+        rotateOverlay.style.display = 'none';
+
+    }
+}
+
+function checkOrientation() {
+    if (window.innerWidth < window.innerHeight) {
+        toggleRotateOverlay(true);
+    } else {
+        toggleRotateOverlay(false);
+    }
+}
+
+window.addEventListener('load', checkOrientation);
+window.addEventListener('resize', checkOrientation);
+
+
 
 
 
@@ -155,6 +187,7 @@ function adjustScaling() {
     container.style.top = offsetY + 'px';
     container.style.right = offsetX + 'px';
     container.style.bottom = offsetY + 'px';
+    container.style.zIndex = 3
 }
 
 
@@ -180,12 +213,12 @@ document.addEventListener('mozfullscreenchange', handleFullscreenChange);
 document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
 document.addEventListener('msfullscreenchange', handleFullscreenChange);
 
-function removeBackground(){
+function removeBackground() {
     document.getElementById('pepeBackground').classList.add('d-none')
     document.getElementById('endbossBackground').classList.add('d-none')
 }
 
-function showBackground(){
+function showBackground() {
     document.getElementById('pepeBackground').classList.remove('d-none')
     document.getElementById('endbossBackground').classList.remove('d-none')
 }

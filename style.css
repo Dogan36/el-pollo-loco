@@ -1,12 +1,23 @@
 body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+wrapper {
+    position: absolute;
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 0;
     padding: 0;
-    justify-content: space-around;
+    gap: 140px;
     height: 100vh;
+    width: 100vw;
     overflow: hidden;
+    /* Verhindert das Anzeigen der Scrollbalken */
+    scrollbar-width: none;
+    background-image: url('img/5_background/first_half_background.png')
 }
 
 .d-none {
@@ -19,6 +30,13 @@ body {
     margin: 0;
     letter-spacing: 10px;
     font-weight: normal;
+    z-index: 1;
+}
+
+.title::before {
+    content: "";
+    display: block;
+    height: 20px;
 }
 
 canvas {
@@ -36,6 +54,7 @@ canvas {
     height: 480px;
     box-shadow: rgb(0, 0, 0) 0px 0px 86px;
     border: 1px solid black;
+
 }
 
 .overlay {
@@ -66,7 +85,7 @@ canvas {
 .controlsMobile {
     position: absolute;
     width: 100%;
-    display: flex;
+    display: none;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
@@ -96,10 +115,14 @@ canvas {
     border-color: #DE0A16;
     border-radius: 10px;
     background-color: #D66A18;
-    margin: 0;
-    padding: 0;
-
+    /* margin: 0; */
+    border: 1px solid #DE0A16;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+
 
 .controls :nth-child(5) {
     width: 100px;
@@ -110,6 +133,7 @@ canvas {
 .controls p {
     font-family: montagueregular;
     white-space: nowrap;
+
 }
 
 .startButton {
@@ -118,7 +142,7 @@ canvas {
     left: 50%;
     cursor: pointer;
     transform: translateX(-50%);
-    top: 14%;
+    top: 17%;
     height: 50px;
     width: 100px;
     font-size: 16px;
@@ -158,46 +182,53 @@ canvas {
     position: absolute;
     top: -746px;
     left: -265px;
-    z-index: -1;
+    z-index: 0;
 }
 
 .endbossBackground {
     position: absolute;
     top: -340px;
     left: 630px;
-    z-index: -1;
+    z-index: 0;
     height: 744px;
 }
 
-/* Smartphones */
-@media only screen and (max-width: 1000px) {
+.rotateOverlay {
+    display: none;
+}
+
+.rotateOverlay img {
+    height: 150px;
+}
+
+
+@media (max-width: 980px) {
+   
+}
+
+
+/* Styles für mobile Geräte */
+@media screen and (max-width: 767px) {
+    /* Hier den Code für den mobilen Inhalt einfügen */
+    wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+    }
+
     canvas {
         width: 100%;
     }
 
-    .icons,
-    .endbossBackground,
-    .pepeBackground {
-        display: none;
+    .startButton {
+        height: 40px;
     }
-
-
-    body {
-        height: 100vh;
-        width: 100vw;
-    }
+.title{
+    display: none;
 }
 
-/* Smartphones -------- */
-@media only screen and (max-height: 480px) {
-    canvas {
-        height: 100vh;
-    }
-
-    .icons,
-    .endbossBackground,
-    .pepeBackground,
-    .title {
+    .controls {
         display: none;
     }
 
@@ -206,6 +237,82 @@ canvas {
     .container {
         height: 100%;
         width: 100%;
+        border: unset;
     }
 
+    .rotateOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgb(239 227 227);
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+  }
+  
+  /* Styles für Tablets */
+  @media screen and (max-width: 1180px) {
+    /* Hier den Code für den Tablet-Inhalt einfügen */
+    wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+    }
+
+    canvas {
+        width: 100%;
+        height: 100%;
+    }
+
+    .title,
+    .pepeBackground,
+    .endbossBackground{
+        display: none;
+    }
+
+    .startButton {
+        height: 40px;
+    }
+
+
+    .controls {
+        display: none;
+    }
+
+.icons{
+    top:12px
 }
+
+.startButton{
+    top: 13%
+}
+    .fullscreen,
+    .container {
+        height: 100%;
+        width: 100%;
+        border: unset;
+    }
+
+    .rotateOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgb(239 227 227);
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+  }
+  
+  
+  

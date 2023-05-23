@@ -30,48 +30,68 @@
     <script src="levels/level1.js"></script>
 </head>
 
-<body background='img/5_background/first_half_background.png'>
-    <h1 class="title">El pollo loco</h1>
-    <div class="fullscreen" id="fullscreen">
-        <img id="pepeBackground" class="pepeBackground" src="img/2_character_pepe/1_idle/idle/I-1.png" alt="">
-        <img id="endbossBackground" class="endbossBackground" src="img/4_enemie_boss_chicken/3_attack/G20.png" alt="">
-        <div class="container" id="container">
-            <canvas class="canvas" id="canvas" width="900px" height="480px"></canvas>
-
-            <div id="endscreen" class="overlay d-none"><img id="endscreenImg" src="img/9_intro_outro_screens/game_over/game over!.png"
-                    alt=""><button class="startButton" onclick="initLevel(); init()">Restart</button></div>
-        
-        <div id="startscreen" class="overlay"><img src="img/9_intro_outro_screens/start/startscreen_1.png" alt="">
-            <button class="startButton" onclick="initLevel(); init()">Start</button>
+<body>
+    <wrapper background='img/5_background/first_half_background.png'>
+        <div id="rotateOverlay" class="rotateOverlay">
+            <img src="img/icons8-drehen-80.png" alt="">
         </div>
-        <div class="overlay">
-            <div class="icons">
-                <img src="img/audio-speaker-on.png" alt="">
-                <img id="fullscreenImg" onclick="toggleFullscreen()" src="img/fullscreen.png" alt="">
-            </div>
-            <div id="controls" class="controls d-none">
-                <button class="control"><img src="img/icons8-links-52.png" alt=""></button><p>MoveLeft</p>
-                <button class="control"><img src="img/icons8-rechts-52.png" alt=""></button><p>MoveRight</p>
-                <button class="control">SPACE</button><p>Jump</p>
-                <button class="control"><img src="img/icons8-d-50.png" alt=""></button><p>Throw Bottle</p>
-            </div>
-            <div id="controlsMobile" class="controlsMobile">
-                <div>
-                    <button id="left" class="control" ontouchstart="keyboard.LEFT = true;" ontouchend="keyboard.LEFT = false;"><img src="img/icons8-links-52.png" alt=""></button>
-                    <button id="right" class="control" ontouchstart="keyboard.RIGHT = true;" ontouchend="keyboard.RIGHT = false;"><img src="img/icons8-rechts-52.png" alt=""></button>
+        <h1 class="title">El pollo loco</h1>
+        <div class="fullscreen" id="fullscreen">
+            <img id="pepeBackground" class="pepeBackground" src="img/2_character_pepe/1_idle/idle/I-1.png" alt="">
+            <img id="endbossBackground" class="endbossBackground" src="img/4_enemie_boss_chicken/3_attack/G20.png"
+                alt="">
+            <div class="container" id="container">
+                <canvas class="canvas" id="canvas" width="900px" height="480px"></canvas>
+
+                <div id="endscreen" class="overlay d-none"><img id="endscreenImg"
+                        src="img/9_intro_outro_screens/game_over/game over!.png" alt=""><button class="startButton"
+                        onclick="initLevel(); init()">Restart</button></div>
+
+                <div id="startscreen" class="overlay"><img src="img/9_intro_outro_screens/start/startscreen_1.png"
+                        alt="">
+                    <button class="startButton" onclick="initLevel(); init()">Start</button>
                 </div>
-                <div>
-                    <button id="jump" class="control" ontouchstart="keyboard.SPACE = true;" ontouchend="keyboard.SPACE = false;"><img class="rotate" src="img/icons8-links-52.png" alt=""></button>
-                    <button id="throw" class="control" ontouchstart="keyboard.D= true;" ontouchend="keyboard.D = false;"><img src="img/icons8-sauce-bottle-48.png" alt=""></button>
+
+                <div class="overlay">
+                    <div class="icons">
+                        <img src="img/audio-speaker-on.png" alt="">
+                        <img id="fullscreenImg" onclick="toggleFullscreen()" src="img/fullscreen.png" alt="">
+                    </div>
+                    <div id="controls" class="controls">
+                        <div class="control"><img src="img/icons8-links-52.png" alt=""></div>
+                        <p>MoveLeft</p>
+                        <div class="control"><img src="img/icons8-rechts-52.png" alt=""></div>
+                        <p>MoveRight</p>
+                        <div class="control">SPACE</div>
+                        <p>Jump</p>
+                        <div class="control"><img src="img/icons8-d-50.png" alt=""></div>
+                        <p>Throw Bottle</p>
+                    </div>
+                    <div id="controlsMobile" class="controlsMobile">
+                        <div>
+                            <button id="left" class="control" ontouchstart="handleTouchStart(event, 'LEFT')"
+                                ontouchend="handleTouchEnd(event, 'LEFT')"><img src="img/icons8-links-52.png"
+                                    alt=""></button>
+                            <button id="right" class="control" ontouchstart="handleTouchStart(event, 'RIGHT')"
+                                ontouchend="handleTouchEnd(event, 'RIGHT')"><img src="img/icons8-rechts-52.png"
+                                    alt=""></button>
+                        </div>
+                        <div>
+                            <button id="jump" class="control" ontouchstart="handleTouchStart(event, 'SPACE')"
+                                ontouchend="handleTouchEnd(event, 'SPACE')"><img class="rotate"
+                                    src="img/icons8-links-52.png" alt=""></button>
+                            <button id="throw" class="control" ontouchstart="handleTouchStart(event, 'D')"
+                                ontouchend="handleTouchEnd(event, 'D')"><img src="img/icons8-sauce-bottle-48.png"
+                                    alt=""></button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            
+
             </div>
 
+
         </div>
-   
-    </div>
-    </div>
+    </wrapper>
 </body>
 
 
