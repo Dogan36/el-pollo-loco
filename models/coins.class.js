@@ -14,7 +14,7 @@ class Coin extends MovableObject {
         'img/8_coin/coin_1.png',
         'img/8_coin/coin_2.png'
     ]
-
+    
     constructor() {
         super().loadImage('img/8_coin/coin_1.png')
         this.loadImages(this.IMAGES)
@@ -33,5 +33,8 @@ class Coin extends MovableObject {
 
     collect() {
         world.collectedCoins += 10;
+        collect_sound_coin.pause()
+        collect_sound_coin.currentTime=0
+        collect_sound_coin.play()
     }
 }

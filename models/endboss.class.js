@@ -90,14 +90,14 @@ class Endboss extends MovableObject {
     }
 
     moveEndboss() {
-        if (this.isDead()) { }
+        if (this.isDead()) {danger_sound.pause();}
         else if (this.isHurt()) {
             this.speed = 1.5;
             this.moveLeft();
         }
         else if (this.isAttacking()) this.moveLeft();
-        else if (this.isClose()) { }
-        else if (this.isReached()) this.moveLeft();
+        else if (this.isClose()) {}
+        else if (this.isReached()) this.moveLeft() ;
     }
 
 
@@ -106,7 +106,7 @@ class Endboss extends MovableObject {
         else if (this.isHurt()) this.playAnimation(this.IMAGES_HURT);
         else if (this.isAttacking()) this.playAnimation(this.IMAGES_ATTACK);
         else if (this.isClose()) this.playAnimation(this.IMAGES_ALERT);
-        else if (this.isReached()) this.playAnimation(this.IMAGES_WALKING);
+        else if (this.isReached()) this.playAnimation(this.IMAGES_WALKING) ;
     }
 
 
@@ -116,6 +116,8 @@ class Endboss extends MovableObject {
                 stopIntervalById('animationsIntervalEndboss');
                 this.loadImage(this.IMAGES_DEAD[2]);
                 changeEndscreen('win')
+                world_sound.pause()
+                victory_sound.play()
                 stopGame()
             }, 2000);
     }

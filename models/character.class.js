@@ -79,6 +79,8 @@ class Character extends MovableObject {
         'img/2_character_pepe/5_dead/D-57.png'
     ];
 
+    
+    
    
     constructor() {
         super().loadImage('img/2_character_pepe/1_idle/idle/I-1.png')
@@ -104,7 +106,7 @@ class Character extends MovableObject {
     checkKeyboardPress() {
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x - 300) { this.moveRight(); this.lastKeyPressed = new Date().getTime(); }
         if (this.world.keyboard.LEFT && this.x > -100) { this.moveLeft(); this.otherDirection = true; this.lastKeyPressed = new Date().getTime(); }
-        if (this.world.keyboard.SPACE && !this.isAboveGround()) { this.jump(); this.lastKeyPressed = new Date().getTime(); }
+        if (this.world.keyboard.SPACE && !this.isAboveGround()) { this.jump(); this.lastKeyPressed = new Date().getTime(); jump_sound.play()}
         if (this.world.keyboard.D) { this.lastKeyPressed = new Date().getTime(); }
         this.world.camera_x = -this.x + 50;
     }
@@ -112,10 +114,10 @@ class Character extends MovableObject {
 
     playAnimations() {
         if (this.isDead()) this.playAnimationsDead()
-        else if (this.isHurt()) this.playAnimation(this.IMAGES_HURT)
+        else if (this.isHurt()) {this.playAnimation(this.IMAGES_HURT); hurt_sound.play()}
         else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) this.playAnimation(this.IMAGES_WALKING)
         else if (this.idle()) this.playAnimation(this.IMAGES_IDLE)
-        else if (this.idlelong()) this.playAnimation(this.IMAGES_IDLELONG)
+        else if (this.idlelong()) {this.playAnimation(this.IMAGES_IDLELONG); sleep_sound.play()}
     }
 
 
@@ -138,6 +140,8 @@ class Character extends MovableObject {
             this.y=1000
             this.loadImage(this.IMAGES_DISAPEAR);
             changeEndscreen('lose')
+            defeat_sound.play()
+            world_sound.pause()
             stopGame()
         }, 1500);
         //changeEndscreen(lose)

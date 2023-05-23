@@ -16,6 +16,7 @@ class Bottle extends MovableObject {
        
     ]
 
+
     constructor(){
         super();
         const randomIndex = Math.floor(Math.random() * this.IMAGES_BOTTLE.length);
@@ -25,6 +26,9 @@ class Bottle extends MovableObject {
 
     collect() {
         world.collectedBottles += 1;
+        collect_sound_bottle.pause()
+        collect_sound_bottle.currentTime=0
+        collect_sound_bottle.play()
     }
         
 }

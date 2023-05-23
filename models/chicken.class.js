@@ -9,6 +9,8 @@ class Chicken extends MovableObject {
         top: 10,
         bottom: 10
     };
+    jumpon_sound_played = false;
+
 
     IMAGES_WALKING = [
         'img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
@@ -16,11 +18,12 @@ class Chicken extends MovableObject {
         'img/3_enemies_chicken/chicken_normal/1_walk/3_w.png'
     ]
 
+    
     IMAGE_DEAD = [
         'img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
     ];
 
-  
+
     constructor() {
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png')
         this.loadImages(this.IMAGES_WALKING);
@@ -30,7 +33,7 @@ class Chicken extends MovableObject {
         this.animate();
     }
 
-    
+
     animate() {
         setStoppableInterval(this.playAnimations.bind(this), 200);
         setStoppableInterval(this.chickenMove.bind(this), 1000 / 60);
@@ -38,7 +41,15 @@ class Chicken extends MovableObject {
 
 
     playAnimations() {
-        if (this.isDead()) this.playAnimation(this.IMAGE_DEAD)
+        if (this.isDead()) {
+            this.playAnimation(this.IMAGE_DEAD)
+            if (this.jumpon_sound_played == false) {
+                jumpon_sound.pause();
+                jumpon_sound.currentTime = 0;
+                jumpon_sound.play()
+                this.jumpon_sound_played = true
+            }
+        }
         else this.playAnimation(this.IMAGES_WALKING)
     }
 

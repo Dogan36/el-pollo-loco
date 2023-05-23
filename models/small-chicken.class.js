@@ -10,6 +10,9 @@ class Smallchicken extends MovableObject {
         bottom: 10
     };
 
+    jumpon_sound_played = false;
+    
+
     IMAGES_WALKING = [
         'img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
         'img/3_enemies_chicken/chicken_small/1_walk/2_w.png',
@@ -36,9 +39,18 @@ class Smallchicken extends MovableObject {
 
 
     playAnimations() {
-        if (this.isDead()) this.playAnimation(this.IMAGE_DEAD)
+        if (this.isDead()) {
+            this.playAnimation(this.IMAGE_DEAD)
+            if(this.jumpon_sound_played == false){
+                jumpon_sound.pause();
+                jumpon_sound.currentTime = 0;
+                jumpon_sound.play()
+            this.jumpon_sound_played = true
+        }
+        }
         else this.playAnimation(this.IMAGES_WALKING)
     }
+
 
 
     chickenMove() {

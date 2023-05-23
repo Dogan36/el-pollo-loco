@@ -16,6 +16,7 @@ class World {
     timepassedThrow
     lastThrowTime = new Date().getTime()
     gameIsRunning = true
+    
 
 
 
@@ -28,6 +29,7 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
+        world_sound.play()
     }
 
     setWorld() {
@@ -42,6 +44,7 @@ class World {
             this.checkThrowObjects();
             this.checkCollection();
             this.checkEndbossHit()
+            
         }, 1000 / 60);
 
 
@@ -66,12 +69,16 @@ class World {
 
     checkCollision() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && !(enemy.isDead())) {
+            if (this.character.isColliding(enemy) && !(enemy.isDead()) || this.charaterBehindEndboss()) {
                 this.character.hit()
                 this.statusBarHealth.setPercentage(this.character.energy)
             }
         })
     }
+
+    charaterBehindEndboss(){
+    return this.character.x > this.level.enemies[0].x + 100
+}
 
     checkEndbossHit() {
         const throwableObjects = this.throwableObjects.slice(); // Kopie der throwableObjects-Array erstellen
@@ -209,8 +216,11 @@ class World {
     }
 
     addStatusbarEndboss() {
-        if (this.level.enemies[0] && this.character.x > this.level.enemies[0].x - 500) {
+      
+        if (this.level.enemies[0] && this.character.x > this.level.enemies[0].x - 500 && !(this.level.enemies[0].isDead())) {
             this.addToMap(this.statusBarEndboss)
+            world_sound.pause();
+            danger_sound.play()
         }
     }
 }

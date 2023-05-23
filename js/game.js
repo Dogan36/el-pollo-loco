@@ -1,6 +1,18 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let world_sound = new Audio('audio/music.mp3')
+let danger_sound = new Audio('audio/danger.m4a')
+let jump_sound = new Audio('audio/jump.mp3');
+let hurt_sound = new Audio('audio/hurt.mp3');
+let sleep_sound = new Audio('audio/snore.mp3')
+let collect_sound_bottle = new Audio('audio/bottleCollect.mp3')
+let collect_sound_coin = new Audio('audio/coinCollect.mp3')
+let jumpon_sound = new Audio('audio/jumpon.mp3')
+let break_sound = new Audio('audio/brokenglas.m4a')
+let throw_sound = new Audio('audio/throw.mp3')
+let victory_sound = new Audio('audio/victory.mp3')
+let defeat_sound = new Audio('audio/lost.mp3')
 
 function init() {
     canvas = document.getElementById('canvas');
@@ -110,6 +122,8 @@ function hideStartscreen() {
 
 function restartGame() {
     hideEndscreen();
+    world_sound.play();
+            danger_sound.pause()
     initLevel();
     init();
 }
@@ -165,10 +179,6 @@ window.addEventListener('load', checkOrientation);
 window.addEventListener('resize', checkOrientation);
 
 
-
-
-
-
 function adjustScaling() {
     var container = document.getElementById('container');
     var fullscreen = document.getElementById('fullscreen');
@@ -191,7 +201,6 @@ function adjustScaling() {
 }
 
 
-
 function undoScaling() {
     var container = document.getElementById('container');
     container.style.transform = 'scale(' + 1 + ')';
@@ -201,6 +210,7 @@ function undoScaling() {
     container.style.position = 'static';
 }
 
+
 function handleFullscreenChange() {
     if (!document.fullscreenElement) {
         undoScaling();
@@ -208,17 +218,34 @@ function handleFullscreenChange() {
     }
 }
 
+
 document.addEventListener('fullscreenchange', handleFullscreenChange);
 document.addEventListener('mozfullscreenchange', handleFullscreenChange);
 document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
 document.addEventListener('msfullscreenchange', handleFullscreenChange);
+
+
 
 function removeBackground() {
     document.getElementById('pepeBackground').classList.add('d-none')
     document.getElementById('endbossBackground').classList.add('d-none')
 }
 
+
 function showBackground() {
     document.getElementById('pepeBackground').classList.remove('d-none')
     document.getElementById('endbossBackground').classList.remove('d-none')
+}
+
+
+var isMuted = false;
+function toggleMute() {
+    let muteButton = document.getElementById('muteButton')
+    isMuted = !isMuted;
+    world_sound.muted = isMuted;
+    if (isMuted) {
+        muteButton.src = "img/audio-speaker-on.png";
+    } else {
+        muteButton.src = "img/mute.png";
+    }
 }

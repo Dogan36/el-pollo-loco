@@ -29,6 +29,9 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png',
     ]
 
+    break_sound_played = false;
+   
+    throw_sound_played = false;
 
     constructor(x, y) {
         super()
@@ -44,13 +47,16 @@ class ThrowableObject extends MovableObject {
 
 
     throw() {
+        throw_sound.pause();
+        throw_sound.currentTime = 0;
+        throw_sound.play();
         this.applyGravity()
         this.throwInterval = setInterval(() => {
             this.x += this.speedX;
         }, 25)
     }
 
-   
+
 
     animate() {
         setInterval(() => {
@@ -58,10 +64,17 @@ class ThrowableObject extends MovableObject {
             if (world.level.enemies[0].isColliding(this)) {
                 this.playAnimation(this.IMAGES_SPLASH)
                 this.cancelGravity()
+                if (this.break_sound_played == false) {
+                    break_sound.pause()
+                    break_sound.currentTime=0
+                    break_sound.play()
+                    this.break_sound_played = true
+                }
                 clearInterval(this.throwInterval);
             }
             else {
-                this.playAnimation(this.IMAGES_THROWING)
+                this.playAnimation(this.IMAGES_THROWING);
+                
             }
         }, 50)
 
