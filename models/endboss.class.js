@@ -63,36 +63,54 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
-
         setTimeout(() => {
             this.animate();
-        }, 2000); // 2 Sekunden Verzögerung
-
+        }, 2000);
     }
 
+/**
+ * This function checks if character is on a certain distance to an object
+ * 
+ * @returns boolean
+ */
     isReached() {
         return world.character.x > this.x - 700
     };
 
+/**
+ * This function checks if character is on a certain distance to an object
+ * 
+ * @returns boolean
+ */
     isClose() {
         return world.character.x > this.x - 500
-
     };
 
+    /**
+     * This function checks if character is on a certain distance to an object
+     * 
+     * @returns boolean
+     */
     isAttacking() {
         return world.character.x > this.x - 400
     }
 
+    
     animate() {
         setStoppableInterval(this.moveEndboss.bind(this), 16);
         let animationsIntervalEndboss = setStoppableInterval(this.playAnimations.bind(this), 160);
-        
     }
 
+
+
+/**
+ * This function moves Endboss depending of its status
+ * 
+ */
     moveEndboss() {
         if (this.isDead()) {danger_sound.pause();}
         else if (this.isHurt()) {
-            this.speed = 1.5;
+            this.speed = 1.2;
             this.moveLeft();
         }
         else if (this.isAttacking()) this.moveLeft();
@@ -100,7 +118,10 @@ class Endboss extends MovableObject {
         else if (this.isReached()) this.moveLeft() ;
     }
 
-
+/**
+ * This function plays animation of endboss depending of its status
+ * 
+ */
     playAnimations() {
         if (this.isDead()) this.playAnimationsDead();
         else if (this.isHurt()) this.playAnimation(this.IMAGES_HURT);

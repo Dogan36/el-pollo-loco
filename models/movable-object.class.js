@@ -60,12 +60,24 @@ class MovableObject extends DrawableObject {
 
 
   isJumpingOn(mo) {
-    return this.speedY < -5 &&
-      this.y + this.height + this.offset.bottom >= mo.y &&
-      this.y + this.height + this.offset.bottom <= mo.y + mo.height &&
-      this.x + this.width - this.offset.right + 10 > mo.x &&
-      this.x - this.offset.left - 10 < mo.x + mo.width;
-  }
+    const characterBottom = this.y + this.height + this.offset.bottom;
+    const characterLeft = this.x - this.offset.left;
+    const characterRight = this.x + this.width - this.offset.right;
+
+    const objectTop = mo.y + mo.offset.top;
+    const objectBottom = mo.y + mo.height - mo.offset.bottom;
+    const objectLeft = mo.x + mo.offset.left;
+    const objectRight = mo.x + mo.width - mo.offset.right;
+
+    return (
+        this.speedY < -5 &&
+        characterBottom >= objectTop &&
+        characterBottom <= objectBottom &&
+        characterRight + 10 > objectLeft &&
+        characterLeft - 10 < objectRight
+    );
+}
+
 
 
   hit() {

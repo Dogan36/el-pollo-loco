@@ -3,11 +3,11 @@ class Character extends MovableObject {
     width = 150;
     y = 135;
     x = 0;
-    speed = 6;
+    speed = 10;
     offset = {
         left: 25,
         top: 90,
-        right: 25,
+        right: 50,
         bottom: 0
     };
 
@@ -95,14 +95,20 @@ class Character extends MovableObject {
         this.animate();
     }
 
-
+/**
+ * This function sets intervals to play animations
+ * 
+ */
     animate() {
         setStoppableInterval(this.checkKeyboardPress.bind(this), 1000 / 25)
         let animationsIntervalCharacter = setStoppableInterval(this.playAnimations.bind(this), 250)
         setStoppableInterval(this.playAnimationsJump.bind(this), 1000 / 25)
     }
 
-
+/**
+ * This function checks if keys are pressed
+ * 
+ */
     checkKeyboardPress() {
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x - 300) { this.moveRight(); this.lastKeyPressed = new Date().getTime(); }
         if (this.world.keyboard.LEFT && this.x > -100) { this.moveLeft(); this.otherDirection = true; this.lastKeyPressed = new Date().getTime(); }
@@ -111,7 +117,10 @@ class Character extends MovableObject {
         this.world.camera_x = -this.x + 50;
     }
 
-
+/**
+ * This function plays the images and sounds depending on the status of the character
+ * 
+ */
     playAnimations() {
         if (this.isDead()) this.playAnimationsDead()
         else if (this.isHurt()) {this.playAnimation(this.IMAGES_HURT); hurt_sound.play()}
@@ -120,7 +129,10 @@ class Character extends MovableObject {
         else if (this.idlelong()) {this.playAnimation(this.IMAGES_IDLELONG); sleep_sound.play()}
     }
 
-
+/**
+ * This function plays the images when character is jumping
+ * 
+ */
     playAnimationsJump() {
         if (this.isAboveGround() && !this.isDead()) {
             if (this.speedY >= 22.5) this.loadImage(this.IMAGES_JUMPING[2]);
@@ -133,6 +145,11 @@ class Character extends MovableObject {
         }
     }
 
+
+    /**
+     * This functions plays the images and sounds when character dies and stops the game afterwards
+     * 
+     */
     playAnimationsDead(){
         this.playAnimation(this.IMAGES_DEAD);
         setTimeout(() => {
@@ -147,12 +164,21 @@ class Character extends MovableObject {
         //changeEndscreen(lose)
     }
 
+/**
+ * This function checks if the character stands still
+ * 
+ * @returns boolean
+ */
     idle() {
         let timepassedKey = new Date().getTime() - this.lastKeyPressed
         return timepassedKey > 0 && timepassedKey < 8000
     }
 
-
+/**
+ * This function checks if the character stands still for long
+ * 
+ * @returns boolean
+ */
     idlelong() {
         let timepassedKey = new Date().getTime() - this.lastKeyPressed
         return timepassedKey > 8000

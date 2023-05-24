@@ -4,14 +4,13 @@ class Smallchicken extends MovableObject {
     y = 360;
     speed = 0.2
     offset = {
-        right: 10,
-        left: 10,
+        right: 15,
+        left: 15,
         top: 10,
         bottom: 10
     };
 
     jumpon_sound_played = false;
-    
 
     IMAGES_WALKING = [
         'img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
@@ -23,6 +22,7 @@ class Smallchicken extends MovableObject {
         'img/3_enemies_chicken/chicken_small/2_dead/dead.png'
     ]
 
+
     constructor() {
         super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png')
         this.loadImages(this.IMAGES_WALKING)
@@ -32,27 +32,36 @@ class Smallchicken extends MovableObject {
         this.animate();
     }
 
+/**
+    * This function sets intervals to play animations
+    * 
+    */
     animate() {
         setStoppableInterval(this.playAnimations.bind(this), 200);
         setStoppableInterval(this.chickenMove.bind(this), 1000 / 60);
     }
 
-
+/**
+ * This function plays the images and sounds depending on the status of the character
+ * 
+ */
     playAnimations() {
         if (this.isDead()) {
             this.playAnimation(this.IMAGE_DEAD)
-            if(this.jumpon_sound_played == false){
+            if (this.jumpon_sound_played == false) {
                 jumpon_sound.pause();
                 jumpon_sound.currentTime = 0;
                 jumpon_sound.play()
-            this.jumpon_sound_played = true
-        }
+                this.jumpon_sound_played = true
+            }
         }
         else this.playAnimation(this.IMAGES_WALKING)
     }
 
-
-
+    /**
+    * This function lets move the chicken to the left
+    * 
+    */
     chickenMove() {
         if (!(this.isDead())) this.moveLeft()
     }

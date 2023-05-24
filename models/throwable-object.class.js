@@ -5,7 +5,6 @@ class ThrowableObject extends MovableObject {
     speedY = 20;
     speedX = 10;
 
-
     offset = {
         left: 0,
         top: 0,
@@ -30,7 +29,6 @@ class ThrowableObject extends MovableObject {
     ]
 
     break_sound_played = false;
-   
     throw_sound_played = false;
 
     constructor(x, y) {
@@ -40,7 +38,6 @@ class ThrowableObject extends MovableObject {
         this.loadImages(this.IMAGES_SPLASH)
         this.x = x;
         this.y = y;
-
         this.throw(x, y);
         this.animate()
     }
@@ -57,29 +54,22 @@ class ThrowableObject extends MovableObject {
     }
 
 
-
     animate() {
         setInterval(() => {
-
             if (world.level.enemies[0].isColliding(this)) {
                 this.playAnimation(this.IMAGES_SPLASH)
                 this.cancelGravity()
                 if (this.break_sound_played == false) {
                     break_sound.pause()
-                    break_sound.currentTime=0
+                    break_sound.currentTime = 0
                     break_sound.play()
                     this.break_sound_played = true
                 }
                 clearInterval(this.throwInterval);
             }
-            else {
-                this.playAnimation(this.IMAGES_THROWING);
-                
-            }
+            else this.playAnimation(this.IMAGES_THROWING);
         }, 50)
-
     }
-
 }
 
 

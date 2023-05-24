@@ -36,7 +36,7 @@ wrapper {
 .title::before {
     content: "";
     display: block;
-    height: 20px;
+    height: 40px;
 }
 
 canvas {
@@ -46,7 +46,6 @@ canvas {
     width: 900px;
     height: 480px;
 }
-
 
 .container {
     position: relative;
@@ -122,8 +121,6 @@ canvas {
     justify-content: center;
 }
 
-
-
 .controls :nth-child(5) {
     width: 100px;
     font-size: 17px;
@@ -163,7 +160,6 @@ canvas {
     backdrop-filter: blur(2px);
 }
 
-
 .icons {
     position: absolute;
     display: flex;
@@ -176,7 +172,6 @@ canvas {
 .icons img {
     cursor: pointer;
 }
-
 
 .pepeBackground {
     position: absolute;
@@ -202,19 +197,62 @@ canvas {
 }
 
 
-@media (max-width: 980px) {
-   
+.pepeBackground,
+.endbossBackground,
+.title {
+    animation: element-animation 1s ease-in-out;
+}
+
+.container {
+    animation: container-animation 1s ease-in-out;
+    /* Verzögerung von 1 Sekunde */
+}
+
+@keyframes element-animation {
+    from {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes container-animation {
+    from {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 
 /* Styles für mobile Geräte */
 @media screen and (max-width: 767px) {
-    /* Hier den Code für den mobilen Inhalt einfügen */
+   
     wrapper {
         display: flex;
         align-items: center;
         justify-content: center;
 
+    }
+
+    @keyframes container-animation {
+        from {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     canvas {
@@ -224,14 +262,14 @@ canvas {
     .startButton {
         height: 40px;
     }
-.title{
-    display: none;
-}
+
+    .title {
+        display: none;
+    }
 
     .controls {
         display: none;
     }
-
 
     .fullscreen,
     .container {
@@ -253,11 +291,11 @@ canvas {
         align-items: center;
         z-index: 9999;
     }
-  }
-  
-  /* Styles für Tablets */
-  @media screen and (max-width: 1180px) {
-    /* Hier den Code für den Tablet-Inhalt einfügen */
+}
+
+/* Styles für Tablets */
+@media screen and (max-width: 1180px) {
+
     wrapper {
         display: flex;
         align-items: center;
@@ -272,7 +310,7 @@ canvas {
 
     .title,
     .pepeBackground,
-    .endbossBackground{
+    .endbossBackground {
         display: none;
     }
 
@@ -280,18 +318,18 @@ canvas {
         height: 40px;
     }
 
-
     .controls {
         display: none;
     }
 
-.icons{
-    top:12px
-}
+    .icons {
+        top: 12px
+    }
 
-.startButton{
-    top: 13%
-}
+    .startButton {
+        top: 13%
+    }
+
     .fullscreen,
     .container {
         height: 100%;
@@ -313,10 +351,19 @@ canvas {
         z-index: 9999;
     }
 
-    .controlsMobile{
+    @keyframes container-animation {
+        from {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .controlsMobile {
         display: flex
     }
-  }
-  
-  
-  
+}

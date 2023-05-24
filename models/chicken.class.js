@@ -4,8 +4,8 @@ class Chicken extends MovableObject {
     y = 330;
     speed = 0.2;
     offset = {
-        right: 10,
-        left: 10,
+        right: 20,
+        left: 20,
         top: 10,
         bottom: 10
     };
@@ -33,13 +33,19 @@ class Chicken extends MovableObject {
         this.animate();
     }
 
-
+    /**
+    * This function sets intervals to play animations
+    * 
+    */
     animate() {
         setStoppableInterval(this.playAnimations.bind(this), 200);
         setStoppableInterval(this.chickenMove.bind(this), 1000 / 60);
     }
 
-
+/**
+ * This function plays the images and sounds depending on the status of the character
+ * 
+ */
     playAnimations() {
         if (this.isDead()) {
             this.playAnimation(this.IMAGE_DEAD)
@@ -53,7 +59,10 @@ class Chicken extends MovableObject {
         else this.playAnimation(this.IMAGES_WALKING)
     }
 
-
+/**
+ * This function lets move the chicken to the left
+ * 
+ */
     chickenMove() {
         if (!(this.isDead())) this.moveLeft()
     }
