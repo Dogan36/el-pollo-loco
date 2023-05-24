@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: character.class.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: character.class.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>class Character extends MovableObject {
+    height = 300;
+    width = 150;
+    y = 135;
+    x = 0;
+    speed = 10;
+    offset = {
+        left: 25,
+        top: 90,
+        right: 50,
+        bottom: 0
+    };
+
+    IMAGES_IDLE = [
+        'img/2_character_pepe/1_idle/idle/I-1.png',
+        'img/2_character_pepe/1_idle/idle/I-2.png',
+        'img/2_character_pepe/1_idle/idle/I-3.png',
+        'img/2_character_pepe/1_idle/idle/I-4.png',
+        'img/2_character_pepe/1_idle/idle/I-5.png',
+        'img/2_character_pepe/1_idle/idle/I-6.png',
+        'img/2_character_pepe/1_idle/idle/I-7.png',
+        'img/2_character_pepe/1_idle/idle/I-8.png',
+        'img/2_character_pepe/1_idle/idle/I-9.png',
+        'img/2_character_pepe/1_idle/idle/I-10.png'
+    ];
+
+    IMAGES_IDLELONG = [
+        'img/2_character_pepe/1_idle/long_idle/I-11.png',
+        'img/2_character_pepe/1_idle/long_idle/I-12.png',
+        'img/2_character_pepe/1_idle/long_idle/I-13.png',
+        'img/2_character_pepe/1_idle/long_idle/I-14.png',
+        'img/2_character_pepe/1_idle/long_idle/I-15.png',
+        'img/2_character_pepe/1_idle/long_idle/I-16.png',
+        'img/2_character_pepe/1_idle/long_idle/I-17.png',
+        'img/2_character_pepe/1_idle/long_idle/I-18.png',
+        'img/2_character_pepe/1_idle/long_idle/I-19.png',
+        'img/2_character_pepe/1_idle/long_idle/I-20.png'
+    ];
+
+    IMAGES_WALKING = [
+        'img/2_character_pepe/2_walk/W-21.png',
+        'img/2_character_pepe/2_walk/W-22.png',
+        'img/2_character_pepe/2_walk/W-23.png',
+        'img/2_character_pepe/2_walk/W-24.png',
+        'img/2_character_pepe/2_walk/W-25.png',
+        'img/2_character_pepe/2_walk/W-26.png'
+    ];
+
+    IMAGES_JUMPING = [
+        'img/2_character_pepe/3_jump/J-31.png',
+        'img/2_character_pepe/3_jump/J-32.png',
+        'img/2_character_pepe/3_jump/J-33.png',
+        'img/2_character_pepe/3_jump/J-34.png',
+        'img/2_character_pepe/3_jump/J-35.png',
+        'img/2_character_pepe/3_jump/J-36.png',
+        'img/2_character_pepe/3_jump/J-37.png',
+        'img/2_character_pepe/3_jump/J-38.png',
+        'img/2_character_pepe/3_jump/J-39.png'
+
+    ]
+
+    IMAGES_HURT = [
+        'img/2_character_pepe/4_hurt/H-41.png',
+        'img/2_character_pepe/4_hurt/H-42.png',
+        'img/2_character_pepe/4_hurt/H-43.png',
+    ]
+
+    IMAGES_DEAD = [
+        'img/2_character_pepe/5_dead/D-51.png',
+        'img/2_character_pepe/5_dead/D-52.png',
+        'img/2_character_pepe/5_dead/D-53.png',
+        'img/2_character_pepe/5_dead/D-54.png',
+        'img/2_character_pepe/5_dead/D-55.png',
+        'img/2_character_pepe/5_dead/D-56.png',
+
+    ]
+
+    IMAGES_DISAPEAR = [
+        'img/2_character_pepe/5_dead/D-57.png'
+    ];
+
+    
+    
+   
+    constructor() {
+        super().loadImage('img/2_character_pepe/1_idle/idle/I-1.png')
+        this.loadImages(this.IMAGES_IDLE);
+        this.loadImages(this.IMAGES_IDLELONG);
+        this.loadImages(this.IMAGES_WALKING);
+        this.loadImages(this.IMAGES_JUMPING);
+        this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_DEAD);
+        this.loadImages(this.IMAGES_DISAPEAR);
+        this.applyGravity();
+        this.animate();
+    }
+
+/**
+ * This function sets intervals to play animations
+ * 
+ */
+    animate() {
+        setStoppableInterval(this.checkKeyboardPress.bind(this), 1000 / 25)
+        let animationsIntervalCharacter = setStoppableInterval(this.playAnimations.bind(this), 250)
+        setStoppableInterval(this.playAnimationsJump.bind(this), 1000 / 25)
+    }
+
+/**
+ * This function checks if keys are pressed
+ * 
+ */
+    checkKeyboardPress() {
+        if (this.world.keyboard.RIGHT &amp;&amp; this.x &lt; this.world.level.level_end_x - 300) { this.moveRight(); this.lastKeyPressed = new Date().getTime(); }
+        if (this.world.keyboard.LEFT &amp;&amp; this.x > -100) { this.moveLeft(); this.otherDirection = true; this.lastKeyPressed = new Date().getTime(); }
+        if (this.world.keyboard.SPACE &amp;&amp; !this.isAboveGround()) { this.jump(); this.lastKeyPressed = new Date().getTime(); jump_sound.play()}
+        if (this.world.keyboard.D) { this.lastKeyPressed = new Date().getTime(); }
+        this.world.camera_x = -this.x + 50;
+    }
+
+/**
+ * This function plays the images and sounds depending on the status of the character
+ * 
+ */
+    playAnimations() {
+        if (this.isDead()) this.playAnimationsDead()
+        else if (this.isHurt()) {this.playAnimation(this.IMAGES_HURT); hurt_sound.play()}
+        else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) this.playAnimation(this.IMAGES_WALKING)
+        else if (this.idle()) this.playAnimation(this.IMAGES_IDLE)
+        else if (this.idlelong()) {this.playAnimation(this.IMAGES_IDLELONG); sleep_sound.play()}
+    }
+
+/**
+ * This function plays the images when character is jumping
+ * 
+ */
+    playAnimationsJump() {
+        if (this.isAboveGround() &amp;&amp; !this.isDead()) {
+            if (this.speedY >= 22.5) this.loadImage(this.IMAGES_JUMPING[2]);
+            else if (this.speedY >= 12.5) this.loadImage(this.IMAGES_JUMPING[3]);
+            else if (this.speedY >= 7.5) this.loadImage(this.IMAGES_JUMPING[4]);
+            else if (this.speedY >= 0) this.loadImage(this.IMAGES_JUMPING[5]);
+            else if (this.speedY &lt;= -22.5) this.loadImage(this.IMAGES_JUMPING[7]);
+            else if (this.speedY &lt;= -17.5 || this.speedY &lt;= -12.5 || this.speedY &lt;= -7.5) this.loadImage(this.IMAGES_JUMPING[6]);
+            else this.loadImage(this.IMAGES_JUMPING[5]);
+        }
+    }
+
+
+    /**
+     * This functions plays the images and sounds when character dies and stops the game afterwards
+     * 
+     */
+    playAnimationsDead(){
+        this.playAnimation(this.IMAGES_DEAD);
+        setTimeout(() => {
+            stopIntervalById('animationsIntervalCharacter');
+            this.y=1000
+            this.loadImage(this.IMAGES_DISAPEAR);
+            changeEndscreen('lose')
+            defeat_sound.play()
+            world_sound.pause()
+            stopGame()
+        }, 1500);
+        //changeEndscreen(lose)
+    }
+
+/**
+ * This function checks if the character stands still
+ * 
+ * @returns boolean
+ */
+    idle() {
+        let timepassedKey = new Date().getTime() - this.lastKeyPressed
+        return timepassedKey > 0 &amp;&amp; timepassedKey &lt; 8000
+    }
+
+/**
+ * This function checks if the character stands still for long
+ * 
+ * @returns boolean
+ */
+    idlelong() {
+        let timepassedKey = new Date().getTime() - this.lastKeyPressed
+        return timepassedKey > 8000
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed May 24 2023 18:43:57 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
