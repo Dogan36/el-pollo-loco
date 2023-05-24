@@ -12,7 +12,11 @@ class MovableObject extends DrawableObject {
   timepassed
   lastKeyPressed = new Date().getTime()
 
-
+/**
+ * This function checks if an elements is above ground
+ * 
+ * @returns boolean 
+ */
   isAboveGround() {
     if (this instanceof ThrowableObject) {
       return true
@@ -22,6 +26,10 @@ class MovableObject extends DrawableObject {
   };
 
 
+  /**
+   * This function applies gravity to elements
+   * 
+   */
   applyGravity() {
     this.gravityInterval = setInterval(() => {
       if (this.isAboveGround() || this.speedY > 0) {
@@ -35,12 +43,21 @@ class MovableObject extends DrawableObject {
     }, 1000 / 25)
   };
 
-
+/**
+ * This function cancels gravity
+ * 
+ */
   cancelGravity() {
     clearInterval(this.gravityInterval);
   }
 
 
+  /**
+   * This function checks if an element is colliding with an moveable object
+   * 
+   * @param {string} mo -This is the id of the moveable object collision is checked with
+   * @returns boolean
+   */
   isColliding(mo) {
     const x1 = this.x + this.offset.left;
     const y1 = this.y + this.offset.top;
@@ -58,7 +75,12 @@ class MovableObject extends DrawableObject {
       y1 < moY2;
   }
 
-
+  /**
+  * This function checks if an element is jumping on a moveable object
+  * 
+  * @param {string} mo -This is the id of the moveable object jumped on is checked with
+  * @returns boolean
+  */
   isJumpingOn(mo) {
     const characterBottom = this.y + this.height + this.offset.bottom;
     const characterLeft = this.x - this.offset.left;
@@ -79,7 +101,10 @@ class MovableObject extends DrawableObject {
 }
 
 
-
+/**
+ * This function reduces the energy of an element when it is hit but not hurt, sets time of last hit
+ * 
+ */
   hit() {
     if (!this.isHurt()) {
       this.energy -= 10;
@@ -91,12 +116,20 @@ class MovableObject extends DrawableObject {
     }
   }
 
-
+/**
+ * This function checks if the energy of an element is 0
+ * 
+ * @returns boolean
+ */
   isDead() {
     return this.energy == 0
   }
 
-
+/**
+ * This function checks if an element got hurt inside a timeframe
+ * 
+ * @returns boolean
+ */
   isHurt() {
     let timepassed = new Date().getTime() - this.lastHit
     return timepassed < 500

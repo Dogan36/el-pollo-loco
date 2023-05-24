@@ -130,7 +130,10 @@ class Endboss extends MovableObject {
         else if (this.isReached()) this.playAnimation(this.IMAGES_WALKING) ;
     }
 
-
+/**
+ * This function plays animation and sounds when endboss is dead, stops game afterwards
+ * 
+ */
     playAnimationsDead(){
         this.playAnimation(this.IMAGES_DEAD);
             setTimeout(() => {

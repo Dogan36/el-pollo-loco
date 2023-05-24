@@ -177,7 +177,10 @@ class World {
         if (this.character.isClose(Endboss)) this.enemies.Endboss.isClose()
     }
 
-
+/**
+ * This function clears the canvas and draws everything depending on the animationframe
+ * 
+ */
     draw() {
 
         this.ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -206,21 +209,33 @@ class World {
         });
     }
 
-
+/**
+ * This function calls addToMap function for each element of an array
+ * 
+ * @param {string} objects - This is an array of elements
+ */
     addObjectsToMap(objects) {
         objects.forEach(object => {
             this.addToMap(object);
         });
     }
 
-
+/**
+ * This function adds an element to the map, flips it if necessary
+ * 
+ * @param {string} mo- this elements is added to the map 
+ */
     addToMap(mo) {
         if (mo.otherDirection) this.flipImage(mo);
         mo.draw(this.ctx);
         if (mo.otherDirection) this.flipImageBack(mo)
     }
 
-
+/**
+ * This function flips an element
+ * 
+ * @param {string} mo - This is the element to be flipped
+ */
     flipImage(mo) {
         this.ctx.save();
         this.ctx.translate(mo.width, 0);
@@ -228,13 +243,20 @@ class World {
         mo.x = mo.x * -1;
     }
 
-
+/**
+ * This function flips an element back
+ * 
+ * @param {string} mo - This is the element to be flipped
+ */
     flipImageBack(mo) {
         this.ctx.restore();
         mo.x = mo.x * -1;
     }
 
-
+/**
+ * This function add the statusbar of the endboss if certain conditions are met, stoppes world sound, plays danger sound
+ * 
+ */
     addStatusbarEndboss() {
         if (this.level.enemies[0] && this.character.x > this.level.enemies[0].x - 500 && !(this.level.enemies[0].isDead())) {
             this.addToMap(this.statusBarEndboss)

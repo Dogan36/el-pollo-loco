@@ -42,7 +42,10 @@ class ThrowableObject extends MovableObject {
         this.animate()
     }
 
-
+/**
+ * This function throws an object
+ * 
+ */
     throw() {
         throw_sound.pause();
         throw_sound.currentTime = 0;
@@ -53,7 +56,10 @@ class ThrowableObject extends MovableObject {
         }, 25)
     }
 
-
+/**
+ * This function plays the animation of an element depending of its status
+ * 
+ */
     animate() {
         setInterval(() => {
             if (world.level.enemies[0].isColliding(this)) {
